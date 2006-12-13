@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+	<!-- application -->
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="org.bellard.qemoon.Application">
+         </run>
+      </application>
+   </extension>
+	<!-- nature -->
+   <extension
+      point="org.eclipse.core.resources.natures"
+      id="org.bellard.qemoon.nature"
+      name="qemoon nature">
+      <runtime>
+         <run class="org.bellard.qemoon.EqemuNature">
+         </run>
+      </runtime>
+   </extension>
+	<!-- perspectives -->
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="qemoon Perspective"
+            class="org.bellard.qemoon.Perspective"
+            id="qemoon.perspective">
+      </perspective>
+   </extension>
+   <!-- product -->
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="qemoon.application"
+            name="qemoon">
+		<property name="windowImages" value="icons/qe-16x16.png,icons/qe-32x32.png"	/>
+         <property
+               name="aboutText"
+               value="qemoon - a gui for qemu - eric bellard - eric.bellard@gmail.com">
+         </property>
+         <property
+               name="aboutImage"
+               value="icons/qemoon.png">
+         </property>
+      </product>
+ 	</extension>
+
+	<!-- wizards -->	
+  <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="New..."
+            id="new">
+      </category>
+      <wizard
+            name="VM Configuration Project"
+            icon="icons/qe-16x16.png"
+            category="new"
+            class="org.bellard.qemoon.wizards.NewProjectWizard"
+            id="org.bellard.qemoon.wizards.NewProjectWizard">
+      </wizard>
+      <wizard
+            name="Example VM Configuration Project"
+            icon="icons/qe-16x16.png"
+            category="new"
+            class="org.bellard.qemoon.wizards.NewExampleProjectWizard"
+            id="org.bellard.qemoon.wizards.NewExampleProjectWizard">
+      </wizard>
+   </extension>
+
+	
+	<!-- preferences -->
+	<extension point="org.eclipse.ui.preferencePages">
+       <page id="org.bellard.qemoon.preferences.GeneralPreferencesPage"
+	    class="org.bellard.qemoon.preferences.GeneralPreferencesPage"
+            name="General">
+       </page>
+   </extension>
+  <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.bellard.qemoon.preferences.GeneralPreferenceInitializer">
+      </initializer>
+   </extension>
+ 
+ 	<!-- views -->
+ 	<extension
+         point="org.eclipse.ui.views">
+      <view
+            name="VMView"
+            allowMultiple="false"
+            icon="icons/qe-16x16.png"
+            class="org.bellard.qemoon.views.VMNavigationView"
+            id="qemoon.navigationView">
+      </view>
+
+    </extension>
+    
+    
+    <!-- introduction page -->
+    <extension
+         point="org.eclipse.ui.intro">
+      <intro
+            class="org.eclipse.ui.intro.config.CustomizableIntroPart"
+            id="qemoon.intro">
+      </intro>
+      <introProductBinding
+            introId="qemoon.intro"
+            productId="qemoon.product">
+      </introProductBinding>
+   </extension>
+   <extension
+         point="org.eclipse.ui.intro.config">
+      <config
+            introId="qemoon.intro"
+            content="introContent.xml"
+            id="qemoon.configId">
+         <presentation
+               home-page-id="root">
+            <implementation
+                  kind="html"
+                  os="win32,linux,macosx">
+            </implementation>
+         </presentation>
+      </config>
+   </extension>
+   
+   <!-- popups menus -->
+	<extension point = "org.eclipse.ui.popupMenus">
+		<!--
+	    <objectContribution
+	        id="qemoon.editconfiguration.object"
+	        objectClass="org.bellard.qemoon.model.VMConfiguration">
+		    <action id="qemoon.editconfiguration.action1"
+		       label="popup1"
+		       icon="icons/e-16x16.png"
+		       class="org.bellard.qemoon.actions.EditConfigurationAction"	
+		       enablesFor="1">
+		    </action>
+		</objectContribution>	
+	    <objectContribution
+	        id="qemoon.editconfiguration.object2"
+	        objectClass="org.bellard.qemoon.model.VM">
+		    <action id="qemoon.editconfiguration.action2"
+		       label="popup2"
+		       icon="icons/e-16x16.png"
+		       class="org.bellard.qemoon.actions.EditConfigurationAction"	
+		       enablesFor="1">
+		    </action>
+		</objectContribution>	
+		<viewerContribution
+	        id="qemoon.editconfiguration.viewer"
+	        targetID="qemoon.navigationView">
+			    <action id="org.eclipse.ui.examples.readmetool.action3"
+			       label="popup3"
+			        menubarPath="additions"
+			       icon="icons/qe-16x16.png"
+			       class="org.bellard.qemoon.actions.DeleteProjectActionDelegate">	
+			    </action>
+		</viewerContribution>
+		-->
+	</extension>
+
+	<!-- actions sets -->
+	   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+           label="%action.set.name"
+            id="org.eclipse.ui.forms.article.actionSet">
+         <menu
+               label="%menu.label"
+               id="org.eclipse.ui.forms.article.menu">
+            <groupMarker
+                  name="group">
+            </groupMarker>
+         </menu>
+         <action
+               label="%action.label"
+               class="org.bellard.qemoon.actions.OpenSimpleFormEditorAction"
+               menubarPath="org.eclipse.ui.forms.article.menu/group"
+               id="org.eclipse.ui.forms.article.simple">
+         </action>	
+              </actionSet>
+	</extension>
+	
+	<!-- editor -->
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="VMConfiguration"
+            default="true"
+            icon="icons/qe-16x16.png"
+            class="org.bellard.qemoon.editors.ConfigurationFormEditor"
+            id="qemoon.ConfigurationFormEditor">
+      </editor>
+   </extension>
+ 		   
+</plugin>

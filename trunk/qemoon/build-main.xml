@@ -1,0 +1,306 @@
+<project name="qemoon" basedir=".">
+
+	<property file="../qemoon-web/ftp.properties"/>
+	<!-- timestamp -->
+	<tstamp>
+		<format property="time" pattern="yyyyMMdd-kkmm" locale="fr" />
+	</tstamp>
+	<tstamp>
+		<format property="subversion" pattern="yyyy-MM-dd hh:mm:ss" />
+	</tstamp>
+
+
+	<!-- ftp properties -->
+	<property name="ftp.user" value="${ftp.user}" />
+	<property name="ftp.password" value="${ftp.password}" />
+	<property name="ftp.server" value="${ftp.server}" />
+	<property name="ftp.bin" value="${ftp.bin}" />
+	<property name="ftp.newer" value="${ftp.newer}" />
+	<property name="ftp.verbose" value="${ftp.verbose}" />
+
+	<!-- <property file="${basedir}/build.properties"/> -->
+
+	<property name="project.version" value="0.0.2.1" />
+	<property name="project.name" value="qemoon" />
+
+	<!-- src dir -->
+	<property name="src.dir" location="${basedir}/src/java/src" />
+	<property name="src.windows.dir" location="${basedir}/src/windows" />
+	<property name="src.linux.dir" location="${basedir}/src/linux" />
+	<property name="src.all-platform.dir" location="${basedir}/src/all-platform" />
+
+	<!-- build dir -->
+	<property name="build.dir" location="${basedir}/build" />
+	<property name="build.src.dir" location="${build.dir}/src" />
+	<property name="build.classes.dir" location="${build.dir}/classes" />
+	<property name="build.jar.dir" location="${build.dir}/jar" />
+	<property name="build.rcp.dir" location="${build.dir}/rcp" />
+	<property name="build.rcp.windows.dir" location="${build.rcp.dir}/windows" />
+	<property name="build.rcp.linux.dir" location="${build.rcp.dir}/linux" />
+	<property name="build.rcp.macosx.dir" location="${build.rcp.dir}/macosx" />
+
+	<!-- dist dir -->
+	<property name="dist.dir" location="${basedir}/dist" />
+
+	<!-- dependencies -->
+	<property name="eclipse.dir" location="/home/eric/dev/eclipse-3.1.2/eclipse" />
+	<property name="lib.dir" location="${basedir}/lib" />
+
+	<fileset id="libset" dir="${lib.dir}">
+		<include name="**/*.jar" />
+	</fileset>
+
+	<fileset id="eclipse.all-platform.dependencies" dir="${src.all-platform.dir}">
+		<include name="plugins/**/*.jar" />
+	</fileset>
+
+	<fileset id="eclipse.linux.dependencies" dir="${eclipse.dir}/plugins">
+		<include name="plugins/**/*.jar" />
+	</fileset>
+
+	<fileset id="eclipse.macosx.dependencies" dir="${eclipse.dir}/plugins">
+		<include name="plugins/**/*.jar" />
+	</fileset>
+
+	<fileset id="plugin.resources" dir="${basedir}">
+		<include name="content/**/*" />
+		<include name="icons/**/*" />
+		<include name="lib/**/*" />
+		<include name="*.product" />
+		<include name="messages.properties" />
+		<include name="preferences.properties" />
+		<include name="options.properties" />
+		<include name="plugin.properties" />
+		<include name="splash.bmp" />
+		<include name="introContent.xml" />
+		<include name="plugin.xml" />
+		<include name="qemu-command.txt" />
+		<include name="TODO.txt" />
+	</fileset>
+
+
+	<path id="project.classpath">
+		<fileset refid="libset">
+		</fileset>
+		<fileset refid="eclipse.all-platform.dependencies" />
+	</path>
+
+
+	<!-- pattern des fichiers a exclures -->
+	<patternset id="excludeFiles">
+		<exclude name="**/CVS/**/*" />
+		<exclude name="**/*.old" />
+		<exclude name="**/*.bak" />
+		<exclude name="**/*.keep" />
+		<exclude name="**/*.contrib" />
+		<exclude name="**/*.del" />
+		<exclude name="**/Thumbs.db" />
+		<exclude name="**/nullpx" />
+	</patternset>
+
+
+	<!-- compiler -->
+	<property name="src.target" value="1.5" />
+	<property name="src.source" value="1.5" />
+	<property name="src.debuglevel" value="source,lines,vars" />
+
+
+	<!-- clean the project build dir -->
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<delete>
+			<fileset dir="dist">
+				<include name="*${project.version}.zip"/>
+			</fileset>
+		</delete>
+	</target>
+
+	<!-- init the build dir -->
+	<target name="init">
+		<mkdir dir="${dist.dir}" />
+		<mkdir dir="${build.classes.dir}" />
+		<mkdir dir="${build.src.dir}" />
+		<mkdir dir="${build.rcp.dir}" />
+		<mkdir dir="${build.jar.dir}" />
+		<mkdir dir="${build.rcp.macosx.dir}/plugins" />
+		<mkdir dir="${build.rcp.linux.dir}/plugins" />
+		<mkdir dir="${build.rcp.windows.dir}/plugins" />
+	</target>
+
+	<!-- pre build -->
+	<target name="pre-build">
+		<copy todir="${build.src.dir}" verbose="true">
+			<fileset dir="${src.dir}">
+				<include name="**/*.java" />
+			</fileset>
+		</copy>
+		<copy todir="${build.classes.dir}" verbose="true">
+			<fileset refid="plugin.resources" />
+		</copy>
+	</target>
+
+	<!-- compile the java files -->
+	<target name="build" depends="init,pre-build">
+		<javac srcdir="${build.src.dir}" destdir="${build.classes.dir}" classpathref="project.classpath" debug="true" failonerror="false" source="${src.source}" target="${src.target}" debuglevel="${src.debuglevel}" />
+	</target>
+
+
+	<target name="build-rcp-linux" depends="build">
+		<copy todir="${build.rcp.linux.dir}" overwrite="true">
+			<fileset dir="${src.all-platform.dir}">
+				<include name="**/*" />
+			</fileset>
+			<fileset dir="${src.linux.dir}">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<copy todir="${build.rcp.linux.dir}/plugins" overwrite="true">
+			<fileset dir="${build.jar.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+		<jar destfile="${build.rcp.linux.dir}/plugins/${project.name}_${project.version}.jar" manifest="${basedir}/META-INF/MANIFEST.MF">
+			<fileset dir="${build.classes.dir}">
+			</fileset>
+			<fileset dir="src/config/linux" includes="*.properties" />
+		</jar>
+		<exec executable="chmod">
+			<arg line="u+x ${build.rcp.linux.dir}/qemoon" />
+		</exec>
+		<exec executable="chmod">
+			<arg line=" +x ${build.rcp.linux.dir}/qemu-0.8.2/usr/local/bin/qemu" />
+		</exec>
+		<zip destfile="${dist.dir}/qemoon-linux-gtk-${project.version}.zip">
+			<fileset dir="${build.rcp.linux.dir}">
+				<include name="**/*" />
+			</fileset>
+		</zip>
+	</target>
+
+	<target name="build-rcp-windows" depends="build">
+		<jar destfile="${build.rcp.windows.dir}/plugins/${project.name}_${project.version}.jar" manifest="${basedir}/META-INF/MANIFEST.MF">
+			<fileset dir="${build.classes.dir}">
+			</fileset>
+			<fileset dir="src/config/windows" includes="*.properties" />
+		</jar>
+
+		<copy todir="${build.rcp.windows.dir}">
+			<fileset dir="${src.all-platform.dir}">
+				<include name="**/*" />
+			</fileset>
+			<fileset dir="${src.windows.dir}">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<copy todir="${build.rcp.windows.dir}/plugins">
+			<fileset dir="${build.jar.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+		<zip destfile="${dist.dir}/qemoon-windows-${project.version}.zip">
+			<fileset dir="${build.rcp.windows.dir}">
+				<include name="**/*" />
+			</fileset>
+		</zip>
+	</target>
+
+
+	<target name="build-rcp-macosx" depends="build">
+		<jar destfile="${build.rcp.macosx.dir}/plugins/${project.name}_${project.version}.jar" manifest="${basedir}/META-INF/MANIFEST.MF">
+			<fileset dir="${build.classes.dir}">
+			</fileset>
+			<fileset dir="src/config/macosx" includes="*.properties" />
+		</jar>
+		<copy todir="${build.rcp.macosx.dir}">
+			<fileset dir="${src.all-platform.dir}">
+				<include name="**/*" />
+			</fileset>
+			<fileset dir="${src.macosx.dir}">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<copy todir="${build.rcp.macosx.dir}/plugins">
+			<fileset dir="${build.jar.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+		<zip destfile="${dist.dir}/qemoon-macosx-${project.version}.zip">
+			<fileset dir="${build.rcp.macosx.dir}">
+				<include name="**/*" />
+			</fileset>
+		</zip>
+	</target>
+
+	<target name="build-src">
+		<zip destfile="dist/qemoon-src-${project.version}.zip" compress="true">
+			<fileset dir="${basedir}">
+				<include name="*.*" />
+				<include name="src/**/*" />
+				<include name="content/**/*" />
+				<include name="icons/**/*" />
+				<include name="lib/**/*" />
+				<include name="META-INF/**/*" />
+				<include name="qemu-0.8.2/**/*" />
+			</fileset>
+		</zip>
+
+	</target>
+
+	<target name="all" depends="clean,build-rcp-linux,build-rcp-windows,build-src" />
+
+
+	<target name="deploy-windows">
+		<ftp password="${ftp.password}" server="${ftp.server}" userid="${ftp.user}" binary="${ftp.bin}" verbose="${ftp.verbose}" newer="${ftp.newer}" remotedir="qemoon">
+			<fileset dir="${dist.dir}">
+				<include name="*windows*${project.version}.zip" />
+			</fileset>
+		</ftp>
+	</target>
+
+	<target name="deploy-linux">
+		<ftp password="${ftp.password}" server="${ftp.server}" userid="${ftp.user}" binary="${ftp.bin}" verbose="${ftp.verbose}" newer="${ftp.newer}" remotedir="qemoon"> 
+			<fileset dir="${dist.dir}">
+				<include name="*linux*${project.version}.zip" />
+			</fileset>
+		</ftp>
+	</target>
+
+	<target name="deploy-src">
+		<ftp password="${ftp.password}" server="${ftp.server}" userid="${ftp.user}" binary="${ftp.bin}" verbose="${ftp.verbose}" newer="${ftp.newer}" remotedir="qemoon">
+			<fileset dir="${dist.dir}">
+				<include name="*src*${project.version}.zip" />
+			</fileset>
+		</ftp>
+	</target>
+
+	<target name="deploy-macosx" depends="build-rcp-macosx">
+		<ftp password="${ftp.password}" server="${ftp.server}" userid="${ftp.user}" binary="${ftp.bin}" verbose="${ftp.verbose}" newer="${ftp.newer}" remotedir="qemoon">
+			<fileset dir="${dist.dir}">
+				<include name="*macosx.zip" />
+			</fileset>
+		</ftp>
+	</target>
+
+
+
+	<target name="deploy-all" depends="deploy-linux,deploy-windows,deploy-src">
+	</target>
+
+	<target name="test-linux" depends="build-rcp-linux">
+		<delete dir="/home/eric/dev/dev-tmp/qemoon-linux-gtk" />
+		<delete file="/home/eric/dev/dev-tmp/qemoon-linux-gtk.zip" />
+		<mkdir dir="/home/eric/dev/dev-tmp/qemoon-linux-gtk" />
+		<unzip dest="/home/eric/dev/dev-tmp/qemoon-linux-gtk" src="${dist.dir}/qemoon-linux-gtk.zip">
+		</unzip>
+		<!--
+		<exec executable="chmod">
+			<arg line="u+x /home/eric/dev/dev-tmp/qemoon-linux-gtk/qemoon" />
+		</exec>
+		<exec executable="chmod">
+			<arg line=" +x /media/sda2/home/eric/dev/dev-tmp/qemoon-linux-gtk/qemu-0.8.2/usr/local/bin/qemu" />
+		</exec>
+		-->
+	</target>
+
+
+</project>

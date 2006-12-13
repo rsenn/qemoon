@@ -1,0 +1,53 @@
+
+* Bug :
+- Bug in vm launch (cf gestion des erreurs)
+- option display dissapeared (VM configuration editor)
+- option display are not centered with the label and the icon (VM configuration editor)
+
+* Define an error management policy 2
+
+* gui :
+- key shortcut for message
+- create tool bar : start, stop, resume, pause 2
+- add/improve icons 4
+- choose whether to add or preserve the vm tree 4
+- add a console for logs 2
+- create image wizard 2
+- launch qemu in a java panel: see what's possible in swing or SWT
+
+* log management 4
+- choose log4j or log jdk 
+- choose levels to use
+- gui console (see up)
+
+* configuration :
+- complete qemu configuration  4
+- cut property file: 3
+	+ label
+	+ config default value
+
+* qemu communication : 3
+
+- send command : 
+	+ all qemu commands 3
+	+ commit qemu image 1
+	+ save qemu state 1
+
+* industrialisation :
+- code quality (refactor, rename, commentaries) 3
+- multiplateform build : macosx avec ant 2
+- documentation 4
+- icons/images 4
+- web site 3
+- publish sources 3
+- integrate kqemu 3
+- intégration test image 2
+
+* better install process
+- creation d'un installer: 4 => zip suffisant au départ
+	+ windows : nullsoft installer
+	+ linux : rpm, debian/ubuntu
+	+ macosx : see what we can do
+
+* i18n 5
+- écrire des fichiers multilingues => communauté fera le boulot si besoin

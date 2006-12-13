@@ -1,0 +1,32 @@
+;; This buffer is for notes you don't want to save, and for Lisp evaluation.
+;; If you want to create a file, visit that file with C-x C-f,
+;; then enter the text in that file's own buffer.
+
+			Throwable realException = e.getTargetException();
+			MessageDialog.openError(getShell(), "Error", realException.getMessage());
+			return false;
+
+
+
+	private void throwCoreException(String message) throws CoreException {
+		IStatus status =
+			new Status(IStatus.ERROR, "editor_example_2", IStatus.OK, message, null);
+		throw new CoreException(status);
+	}
+
+
+
+
+		String message = MessageFormat.format(SECTION_ERROR,
+			new Object[] {pluginId});
+		IStatus status = new Status(IStatus.ERROR, pluginId,
+			TabbedPropertyViewStatusCodes.SECTION_ERROR, message, exception);
+		TabbedPropertyViewPlugin.getPlugin().getLog().log(status);
+
+
+
+		String message = MessageFormat.format(SECTION_ERROR,
+			new Object[] {pluginId});
+		IStatus status = new Status(IStatus.ERROR, pluginId,
+			TabbedPropertyViewStatusCodes.SECTION_ERROR, message, exception);
+		TabbedPropertyViewPlugin.getPlugin().getLog().log(status);
