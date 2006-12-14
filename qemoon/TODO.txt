@@ -3,6 +3,7 @@
 - Bug in vm launch (cf gestion des erreurs)
 - option display dissapeared (VM configuration editor)
 - option display are not centered with the label and the icon (VM configuration editor)
+- qemu communication in windows
 
 * Define an error management policy 2
 
