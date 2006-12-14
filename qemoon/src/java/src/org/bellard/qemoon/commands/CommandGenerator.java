@@ -28,6 +28,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.bellard.qemoon.Activator;
 import org.bellard.qemoon.constants.Configuration2Constants;
+import org.bellard.qemoon.constants.PreferenceConstants;
 import org.bellard.qemoon.utils.ValidatorUtils;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceStore;
@@ -181,9 +182,17 @@ public class CommandGenerator {
 		// AUTOMATIC ASSIGNMENT : it allows to control qemu from qemoon
 		// get a free port number
 		int port = Activator.getDefault().getPortManager().getNextPort(vmName);
+		boolean socketServer = Activator
+				.getDefault()
+				.getPreferenceStore()
+				.getBoolean(
+						PreferenceConstants.PREFERENCES_MONITOR_SOCKETSERVER_VALUE);
+		String monitoroption = "tcp:127.0.0.1:" + port;
+		if (!socketServer) {
+			monitoroption += ",server";
+		}
 		c = new CommandArgument(p.getString(CONFIGURATION_MONITOR),
-				Configuration2Constants.MONITOR_VALUE, "tcp:127.0.0.1:" + port);
-		// + ",server");
+				Configuration2Constants.MONITOR_VALUE, monitoroption);
 		l.add(c);
 
 		// MUST BE THE LAST

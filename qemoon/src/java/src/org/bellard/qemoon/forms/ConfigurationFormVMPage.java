@@ -35,6 +35,7 @@ import org.bellard.qemoon.model.VM;
 import org.bellard.qemoon.monitor.NetworkMonitor;
 import org.bellard.qemoon.monitor.QEmuMonitor;
 import org.bellard.qemoon.resources.RessourcesUtils;
+import org.bellard.qemoon.runtime.QEmuManager;
 import org.bellard.qemoon.runtime.QemuThread;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.preference.PreferenceDialog;
@@ -75,6 +76,8 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 			.getLogger(ConfigurationFormVMPage.class);
 
 	public static final String VM_STATE_STARTED = "started";
+
+	public static final String VM_STATE_PAUSED = "paused";
 
 	public static final String VM_STATE_STOPPED = "stopped";
 
@@ -123,7 +126,8 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 	private boolean isPaused = false;
 
 	public ConfigurationFormVMPage(FormEditor editor) {
-		super(editor, ID, Activator.getDefault().getMessages().getString("configuration.vm.title"));
+		super(editor, ID, Activator.getDefault().getMessages().getString(
+				"configuration.vm.title"));
 	}
 
 	public ConfigurationFormEditor getConfigurationFormEditor() {
@@ -156,9 +160,8 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 		first.setLayoutData(new TableWrapData(TableWrapData.FILL));
 
 		// status
-		toolkit
-				.createLabel(first, Activator.getDefault().getMessages()
-						.getString("configuration.vm.state"));
+		toolkit.createLabel(first, Activator.getDefault().getMessages()
+				.getString("configuration.vm.state"));
 		// TODO get value from file
 		String vmState = VM_STATE_STOPPED;
 		if (getConfigurationFormEditor().getVMConfiguration().getVim()
@@ -220,8 +223,8 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 				}
 			}
 		});
-		startlink
-				.setText(Activator.getDefault().getMessages().getString("configuration.vm.commands.start"));
+		startlink.setText(Activator.getDefault().getMessages().getString(
+				"configuration.vm.commands.start"));
 		startlink.setImage(activator.getImageManager().getStartImage22x22());
 		startlink.setToolTipText(Activator.getDefault().getMessages()
 				.getString("configuration.vm.commands.start"));
@@ -239,8 +242,8 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 
 			}
 		});
-		pauselink
-				.setText(Activator.getDefault().getMessages().getString("configuration.vm.commands.pause"));
+		pauselink.setText(Activator.getDefault().getMessages().getString(
+				"configuration.vm.commands.pause"));
 		// pauselink.setImage(activator.getImageManager().getPauseImage22x22());
 		pauselink.setToolTipText(Activator.getDefault().getMessages()
 				.getString("configuration.vm.commands.pause"));
@@ -260,8 +263,8 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 						VMConfigurationPreferenceManager.MEMORY);
 			}
 		});
-		editConfiglink.setText(Activator.getDefault().getMessages()
-				.getString("configuration.vm.commands.editconfig"));
+		editConfiglink.setText(Activator.getDefault().getMessages().getString(
+				"configuration.vm.commands.editconfig"));
 		editConfiglink.setImage(Activator.getImageDescriptor(
 				"icons/22x22/config.png").createImage());
 		editConfiglink.setToolTipText(Activator.getDefault().getMessages()
@@ -281,8 +284,8 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 						.getVMConfiguration().getVim());
 			}
 		});
-		clonevmlink.setText(Activator.getDefault().getMessages()
-				.getString("configuration.vm.commands.clonevm"));
+		clonevmlink.setText(Activator.getDefault().getMessages().getString(
+				"configuration.vm.commands.clonevm"));
 		clonevmlink.setImage(Activator.getImageDescriptor(
 				"icons/22x22/clone.png").createImage());
 		clonevmlink.setToolTipText(Activator.getDefault().getMessages()
@@ -557,7 +560,8 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 		});
 
 		section.setText(Activator.getDefault().getMessages().getString(title));
-		section.setToolTipText(Activator.getDefault().getMessages().getString(tooltip));
+		section.setToolTipText(Activator.getDefault().getMessages().getString(
+				tooltip));
 
 		Composite sectionClient = toolkit.createComposite(section);
 		layout = new TableWrapLayout();
@@ -585,7 +589,9 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 	/**
 	 * 
 	 */
-	private void startVM() {
+	protected void startVM() {
+
+		// get the vm configuration
 		VM vim = getConfigurationFormEditor().getVMConfiguration().getVim();
 
 		// TODO manage exceptions
@@ -601,20 +607,23 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 			// TODO see if the vm can still be launched
 		}
 
-		// manage status
-		statusLabel.setText(VM_STATE_STARTED);
-		statusLabel.pack();
-		qemuthread = new QemuThread(vim, Activator.getDefault()
-				.getPreferenceStore().getString(
-						PreferenceConstants.PREFERENCES_QEMU_PATH_VALUE), true,
-				Logger.getLogger(vim.getName()));
+		vim.setExecutionObserver(createQemuThreadObserver());
 
+		QEmuManager manager = Activator.getDefault().getQEmuManager(vim);
+		manager.start();
+		
+		
+
+		becomeStop();
+		setEnablePauseLink(true);
+
+	}
+
+	protected Observer createQemuThreadObserver() {
 		Observer observer = new Observer() {
 			public void update(Observable o, Object arg) {
 				getSite().getShell().getDisplay().syncExec(new Runnable() {
 					public void run() {
-						statusLabel.setText(VM_STATE_STOPPED);
-						statusLabel.pack();
 						becomeStart();
 						becomePause();
 						setEnablePauseLink(false);
@@ -627,47 +636,35 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 				});
 			}
 		};
-
-		qemuthread.addObserver(observer);
-		activator.getQemuMonitor().createNetworkMonitor(vim.getName(),
-
-		activator.getPortManager().getNextPort(vim.getName()));
-		qemuthread.start();
-
-		becomeStop();
-		setEnablePauseLink(true);
-
+		return observer;
 	}
 
 	/**
 	 * 
 	 */
-	private void stopVM() {
+	protected void stopVM() {
 		VM vim = getConfigurationFormEditor().getVMConfiguration().getVim();
-		NetworkMonitor monitor = activator.getQemuMonitor().getNetworkMonitor(
-				vim.getName());
-		monitor.executeCommand(QEmuMonitor.QUIT_COMMAND);
+		QEmuManager manager = Activator.getDefault().getQEmuManager(vim);
+		manager.stop();
 	}
 
 	/**
 	 * 
 	 */
-	private void resumeVM() {
+	protected void resumeVM() {
 		VM vim = getConfigurationFormEditor().getVMConfiguration().getVim();
-		NetworkMonitor monitor = activator.getQemuMonitor().getNetworkMonitor(
-				vim.getName());
-		monitor.executeCommand(QEmuMonitor.RESUME_COMMAND);
-		becomePause();
+		QEmuManager manager = Activator.getDefault().getQEmuManager(vim);
+		manager.resume();
+		becomePause(true);
 	}
 
 	/**
 	 * 
 	 */
-	private void pauseVM() {
+	protected void pauseVM() {
 		VM vim = getConfigurationFormEditor().getVMConfiguration().getVim();
-		NetworkMonitor monitor = activator.getQemuMonitor().getNetworkMonitor(
-				vim.getName());
-		monitor.executeCommand(QEmuMonitor.STOP_COMMAND);
+		QEmuManager manager = Activator.getDefault().getQEmuManager(vim);
+		manager.pause();
 		becomeResume();
 	}
 
@@ -676,13 +673,17 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 	 * 
 	 */
 	private void becomeStart() {
+		// start link
 		startlink.setImage(activator.getImageManager().getStartImage22x22());
-		startlink
-				.setText(Activator.getDefault().getMessages().getString("configuration.vm.commands.start"));
+		startlink.setText(Activator.getDefault().getMessages().getString(
+				"configuration.vm.commands.start"));
 		startlink.setToolTipText(Activator.getDefault().getMessages()
 				.getString("configuration.vm.commands.start"));
 		startlink.pack();
 		setEnablePauseLink(false);
+		// manage status => stopped
+		statusLabel.setText(VM_STATE_STOPPED);
+		statusLabel.pack();
 
 	}
 
@@ -692,10 +693,14 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 	 */
 	private void becomeStop() {
 		startlink.setImage(activator.getImageManager().getStopImage22x22());
-		startlink.setText(Activator.getDefault().getMessages().getString("configuration.vm.commands.stop"));
+		startlink.setText(Activator.getDefault().getMessages().getString(
+				"configuration.vm.commands.stop"));
 		startlink.setToolTipText(Activator.getDefault().getMessages()
 				.getString("configuration.vm.commands.stop"));
 		startlink.pack();
+		// manage status
+		statusLabel.setText(VM_STATE_STARTED);
+		statusLabel.pack();
 
 	}
 
@@ -704,27 +709,38 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 	 * 
 	 */
 	private void becomeResume() {
-		pauselink.setText(Activator.getDefault().getMessages()
-				.getString("configuration.vm.commands.resume"));
+		pauselink.setText(Activator.getDefault().getMessages().getString(
+				"configuration.vm.commands.resume"));
 		pauselink.setImage(activator.getImageManager().getResumeImage22x22());
 		pauselink.setToolTipText(Activator.getDefault().getMessages()
 				.getString("configuration.vm.commands.resume"));
 		pauselink.pack();
+		// manage status
+		statusLabel.setText(VM_STATE_PAUSED);
+		statusLabel.pack();
 
+	}
+
+	private void becomePause() {
+		becomePause(false);
 	}
 
 	/**
 	 * 
 	 * 
 	 */
-	private void becomePause() {
-		pauselink
-				.setText(Activator.getDefault().getMessages().getString("configuration.vm.commands.pause"));
+	private void becomePause(boolean status) {
+		pauselink.setText(Activator.getDefault().getMessages().getString(
+				"configuration.vm.commands.pause"));
 		pauselink.setImage(activator.getImageManager().getPauseImage22x22());
 		pauselink.setToolTipText(Activator.getDefault().getMessages()
 				.getString("configuration.vm.commands.pause"));
 		pauselink.pack();
-
+		if (status) {
+			// manage status
+			statusLabel.setText(VM_STATE_STARTED);
+			statusLabel.pack();
+		}
 	}
 
 	/**
@@ -755,9 +771,11 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 			FormToolkit toolkit, String keystart, String image) {
 		ImageHyperlink hyperlink = toolkit.createImageHyperlink(
 				deviceComposite, SWT.WRAP);
-		hyperlink.setText(Activator.getDefault().getMessages().getString(keystart + ".title"));
+		hyperlink.setText(Activator.getDefault().getMessages().getString(
+				keystart + ".title"));
 		hyperlink.setImage(Activator.getImageDescriptor(image).createImage());
-		hyperlink.setToolTipText(Activator.getDefault().getMessages().getString(keystart + ".description"));
+		hyperlink.setToolTipText(Activator.getDefault().getMessages()
+				.getString(keystart + ".description"));
 
 		return hyperlink;
 	}

@@ -26,6 +26,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Observer;
 
 import org.apache.log4j.Logger;
 import org.bellard.qemoon.Activator;
@@ -60,6 +61,9 @@ public class VM implements Comparable<VM>{
 	// TODO delete this line
 	private String qemuImagePath;
 
+	private Observer executionObserver;
+	
+	
 	/**
 	 * @return the vms
 	 */
@@ -271,6 +275,20 @@ public class VM implements Comparable<VM>{
 			first="";
 		}
 		return first.compareTo(second);
+	}
+
+	/**
+	 * @return the executionObserver
+	 */
+	public Observer getExecutionObserver() {
+		return executionObserver;
+	}
+
+	/**
+	 * @param executionObserver the executionObserver to set
+	 */
+	public void setExecutionObserver(Observer executionObserver) {
+		this.executionObserver = executionObserver;
 	};
 
 }

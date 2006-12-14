@@ -34,11 +34,14 @@ public interface PreferenceConstants {
 	public static final String PREFERENCES_QEMU_PATH_VALUE = "preferences.qemu.path.value";
 	public static final String PREFERENCES_KQEMU_PATH_VALUE = "preferences.kqemu.path.value";
 	public static final String PREFERENCES_MONITOR_PORT_VALUE = "preferences.monitor.port.value";
+	public static final String PREFERENCES_MONITOR_SOCKETSERVER_VALUE = "preferences.monitor.socketserver.value";
 
 	
 	public static final String PREFERENCES_KQEMU_PATH_LABEL = "preferences.kqemu.path.label";
 	public static final String PREFERENCES_QEMU_PATH_LABEL = "preferences.qemu.path.label";
 	public static final String PREFERENCES_MONITOR_PORT_LABEL = "preferences.monitor.port.label";
+	public static final String PREFERENCES_MONITOR_SOCKETSERVER_LABEL = "preferences.monitor.socketserver.label";
+	
 	public static final String PREFERENCES_TITLE = "preferences.title";
 	public static final String PREFERENCES_DESCRIPTION = "preferences.description";
 	public static final String PREFERENCES_SECTION = "preferences.section";
