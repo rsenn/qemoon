@@ -20,7 +20,7 @@
 
 	<!-- <property file="${basedir}/build.properties"/> -->
 
-	<property name="project.version" value="0.0.2.1" />
+	<property name="project.version" value="0.0.2.2" />
 	<property name="project.name" value="qemoon" />
 
 	<!-- src dir -->
