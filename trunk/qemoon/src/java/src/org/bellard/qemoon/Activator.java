@@ -22,11 +22,17 @@
  */
 package org.bellard.qemoon;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bellard.qemoon.constants.PreferenceConstants;
+import org.bellard.qemoon.model.VM;
 import org.bellard.qemoon.monitor.QEmuMonitor;
 import org.bellard.qemoon.network.PortManager;
 import org.bellard.qemoon.resources.MessageBundle;
 import org.bellard.qemoon.resources.PreferenceDefaultBundle;
+import org.bellard.qemoon.runtime.QEmuManager;
+import org.bellard.qemoon.runtime.impl.QEmuManagerImpl;
 import org.bellard.qemoon.views.VMNavigationView;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
@@ -61,6 +67,8 @@ public class Activator extends AbstractUIPlugin {
 	private MessageBundle messages;
 
 	private PreferenceDefaultBundle preferenceDefault;
+
+	private Map<String, QEmuManager> qemuManagers = new HashMap<String, QEmuManager>();
 
 	/**
 	 * The constructor
@@ -167,8 +175,22 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	public IPath getPlatformPath() {
-		return new Path(Platform.getInstallLocation().getURL().getFile().toString());
+		return new Path(Platform.getInstallLocation().getURL().getFile()
+				.toString());
 	}
-	
-	
+
+	public QEmuManager createQEmuManager(VM vm) {
+		QEmuManager manager = new QEmuManagerImpl(vm);
+		qemuManagers.put(vm.getName(), manager);
+		return manager;
+	}
+
+	public QEmuManager getQEmuManager(VM vm) {
+		QEmuManager manager = qemuManagers.get(vm.getName());
+		if (manager == null) {
+			manager = createQEmuManager(vm);
+		}
+		return manager;
+	}
+
 }

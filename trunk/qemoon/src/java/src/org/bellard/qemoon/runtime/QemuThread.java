@@ -115,6 +115,7 @@ public class QemuThread extends Observable implements Runnable {
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			// TODO throw an exception
 		} finally {
 			// set the vm as stopped
 			vim.setStarted(false);

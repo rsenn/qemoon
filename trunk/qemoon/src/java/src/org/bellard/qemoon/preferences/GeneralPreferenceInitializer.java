@@ -59,13 +59,21 @@ public class GeneralPreferenceInitializer extends AbstractPreferenceInitializer 
 								.getOsspecificString(
 										PreferenceConstants.PREFERENCES_QEMU_PATH_VALUE))
 				.toOSString();
-		
+
 		// store properties
 		store.setDefault(PreferenceConstants.PREFERENCES_QEMU_PATH_VALUE,
 				qemuPath);
 		store.setDefault(PreferenceConstants.PREFERENCES_MONITOR_PORT_VALUE,
 				Activator.getDefault().getPreferenceDefault().getDefaultString(
 						PreferenceConstants.PREFERENCES_MONITOR_PORT_VALUE));
+		store
+				.setDefault(
+						PreferenceConstants.PREFERENCES_MONITOR_SOCKETSERVER_VALUE,
+						Activator
+								.getDefault()
+								.getPreferenceDefault()
+								.getOsspecificString(
+										PreferenceConstants.PREFERENCES_MONITOR_SOCKETSERVER_VALUE));
 
 	}
 }

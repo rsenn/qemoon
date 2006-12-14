@@ -27,6 +27,7 @@ package org.bellard.qemoon.preferences;
 
 import org.bellard.qemoon.Activator;
 import org.bellard.qemoon.constants.PreferenceConstants;
+import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.FileFieldEditor;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -47,9 +48,10 @@ public class GeneralPreferencesPage extends FieldEditorPreferencePage implements
 	 * @param style
 	 */
 	public GeneralPreferencesPage() {
-		super(Activator.getDefault().getMessages().getString(PreferenceConstants.PREFERENCES_SECTION), GRID);
-		setDescription(Activator.getDefault().getMessages()
-				.getString(PreferenceConstants.PREFERENCES_DESCRIPTION));
+		super(Activator.getDefault().getMessages().getString(
+				PreferenceConstants.PREFERENCES_SECTION), GRID);
+		setDescription(Activator.getDefault().getMessages().getString(
+				PreferenceConstants.PREFERENCES_DESCRIPTION));
 
 	}
 
@@ -60,14 +62,15 @@ public class GeneralPreferencesPage extends FieldEditorPreferencePage implements
 	 */
 	@Override
 	protected void createFieldEditors() {
-		setMessage(Activator.getDefault().getMessages().getString(PreferenceConstants.PREFERENCES_TITLE));
-		
-		FileFieldEditor qemu  = new FileFieldEditor(PreferenceConstants.PREFERENCES_QEMU_PATH_VALUE, 
-				Activator.getDefault().getMessages().getString(PreferenceConstants.PREFERENCES_QEMU_PATH_LABEL), 
-				getFieldEditorParent());
-		addField(qemu); 
-		
+		setMessage(Activator.getDefault().getMessages().getString(
+				PreferenceConstants.PREFERENCES_TITLE));
 
+		FileFieldEditor qemu = new FileFieldEditor(
+				PreferenceConstants.PREFERENCES_QEMU_PATH_VALUE,
+				Activator.getDefault().getMessages().getString(
+						PreferenceConstants.PREFERENCES_QEMU_PATH_LABEL),
+				getFieldEditorParent());
+		addField(qemu);
 
 		// DirectoryFieldEditor kqemuDfe = new
 		// DirectoryFieldEditor(PreferenceConstants.PREFERENCES_KQEMU_PATH_VALUE,
@@ -76,11 +79,21 @@ public class GeneralPreferencesPage extends FieldEditorPreferencePage implements
 		// kqemuDfe.setEmptyStringAllowed(true);
 		// addField(kqemuDfe);
 
-		addField(new IntegerFieldEditor(PreferenceConstants.PREFERENCES_MONITOR_PORT_VALUE, 
-				Activator.getDefault().getMessages().getString(PreferenceConstants.PREFERENCES_MONITOR_PORT_LABEL), 
+		addField(new IntegerFieldEditor(
+				PreferenceConstants.PREFERENCES_MONITOR_PORT_VALUE,
+				Activator.getDefault().getMessages().getString(
+						PreferenceConstants.PREFERENCES_MONITOR_PORT_LABEL),
 				getFieldEditorParent()));
-		
-		
+
+		addField(new BooleanFieldEditor(
+				PreferenceConstants.PREFERENCES_MONITOR_SOCKETSERVER_VALUE,
+				Activator
+						.getDefault()
+						.getMessages()
+						.getString(
+								PreferenceConstants.PREFERENCES_MONITOR_SOCKETSERVER_LABEL),
+				getFieldEditorParent()));
+
 	}
 
 	/*

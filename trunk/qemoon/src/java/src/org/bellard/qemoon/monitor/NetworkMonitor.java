@@ -43,15 +43,24 @@ public class NetworkMonitor {
 	private final static Logger logger = Logger.getLogger(NetworkMonitor.class);
 
 	private ServerSocket serverSocket = null;
+
 	private Socket clientSocket = null;
+
 	private PrintWriter out = null;
 
 	private BufferedReader in = null;
 
 	private int port;
 
+	private boolean serversocket;
+
 	public NetworkMonitor(int port) {
+		this(port, true);
+	}
+
+	public NetworkMonitor(int port, boolean serversocket) {
 		this.port = port;
+		this.serversocket = serversocket;
 		init();
 	}
 
@@ -61,60 +70,64 @@ public class NetworkMonitor {
 			logger.debug(message);
 			throw new IllegalStateException(message);
 		}
-
-		// init the serverSocket and the streams
-		if (this.serverSocket == null) {
-			this.serverSocket = createServerSocket(this.port);
-			if (this.serverSocket != null) {
-
-				Runnable r = new Runnable() {
-					public void run() {
-
-						
-						try {
-							clientSocket = serverSocket.accept();
-						} catch (IOException e) {
-							logger.error("Accept failed : 4444");
-							// TODO throws an exception when pb accepting
-							// connection
-						}
-
-						try {
-							out = new PrintWriter(clientSocket
-									.getOutputStream(), true);
-							in = new BufferedReader(new InputStreamReader(
-									clientSocket.getInputStream()));
-						} catch (IOException e) {
-							String message = "Pb when creating the streams";
-							logger.debug(message, e);
-						}
-					}
-				};
-
-				Thread t = new Thread(r);
-				t.start();
-			}
-		}
 	}
 
-	
+	public void start() {
+
+		// case server socket : create server socket
+		if (serversocket) {
+			this.serverSocket = createServerSocket(this.port);
+		}
+
+		Runnable r = new Runnable() {
+			public void run() {
+
+				// case server socket : accept connection
+				if (serversocket) {
+					try {
+						clientSocket = serverSocket.accept();
+					} catch (IOException e) {
+						logger.error("Accept failed : 4444");
+						// TODO throws an exception when pb accepting
+						// connection
+					}
+				}
+				// case client socket connect to the server
+				else {
+					clientSocket = createSocket("localhost", port);
+				}
+				try {
+					out = new PrintWriter(clientSocket.getOutputStream(), true);
+					in = new BufferedReader(new InputStreamReader(clientSocket
+							.getInputStream()));
+				} catch (IOException e) {
+					String message = "Pb when creating the streams";
+					logger.debug(message, e);
+				}
+			}
+		};
+
+		Thread t = new Thread(r);
+		t.start();
+
+	}
+
 	public void deinit() {
-        try {
+		try {
 			out.close();
 			in.close();
 			clientSocket.close();
-			serverSocket.close();
+			if (serversocket) {
+				serverSocket.close();
+			}
 		} catch (IOException e) {
-			// TODO add specific exception handling
-			String message = "";
+			String message = "pb when closing streams and sockets...";
 			logger.debug(message, e);
-			// decide what to do with the exception
+			// nothing to do
 		}
 
-
 	}
-	
-	
+
 	/**
 	 * @return the in
 	 */
@@ -187,8 +200,8 @@ public class NetworkMonitor {
 			try {
 				socket = new Socket(host, port);
 			} catch (Exception e) {
-				String message = i + ".Pb in creating serverSocket : host=" + host
-						+ " port=" + port;
+				String message = i + ".Pb in creating serverSocket : host="
+						+ host + " port=" + port;
 				logger.debug(message, e);
 			}
 			sleep(300);
@@ -202,7 +215,8 @@ public class NetworkMonitor {
 		try {
 			socket = new ServerSocket(port);
 		} catch (Exception e) {
-			String message = "Pb in creating server serverSocket : port=" + port;
+			String message = "Pb in creating server serverSocket : port="
+					+ port;
 			logger.debug(message, e);
 		}
 		return socket;

@@ -112,9 +112,9 @@ public class QEmuMonitor {
 		return map.get(name);
 	}
 
-	public NetworkMonitor createNetworkMonitor(String name, 
-			int port) {
-		NetworkMonitor monitor = new NetworkMonitor(port);
+	public NetworkMonitor createNetworkMonitor(String name, int port,
+			boolean socketserver) {
+		NetworkMonitor monitor = new NetworkMonitor(port, socketserver);
 		putNetworkMonitor(name, monitor);
 		return monitor;
 	}
