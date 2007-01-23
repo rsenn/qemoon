@@ -28,12 +28,10 @@ import java.util.Observer;
 import org.apache.log4j.Logger;
 import org.bellard.qemoon.Activator;
 import org.bellard.qemoon.constants.Configuration2Constants;
-import org.bellard.qemoon.constants.PreferenceConstants;
 import org.bellard.qemoon.editors.ConfigurationFormEditor;
 import org.bellard.qemoon.manager.VMConfigurationPreferenceManager;
 import org.bellard.qemoon.model.VM;
 import org.bellard.qemoon.monitor.NetworkMonitor;
-import org.bellard.qemoon.monitor.QEmuMonitor;
 import org.bellard.qemoon.resources.RessourcesUtils;
 import org.bellard.qemoon.runtime.QEmuManager;
 import org.bellard.qemoon.runtime.QemuThread;
@@ -480,7 +478,7 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 				toolkit, "configuration.vm.device.image", ICONS_QE_22X22_PNG);
 		String imageText = "";
 		if (getConfigurationFormEditor().getPreferenceStore().getBoolean(
-				Configuration2Constants.IMAGE_ENABLE)) {
+				Configuration2Constants.IMAGE_CUSTOM)) {
 			imageText = getConfigurationFormEditor().getPreferenceStore()
 					.getString(Configuration2Constants.IMAGE_VALUE);
 			imageText = imageText.substring(imageText.lastIndexOf("/") + 1);
@@ -490,13 +488,13 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 				.addPropertyChangeListener(new IPropertyChangeListener() {
 					public void propertyChange(PropertyChangeEvent event) {
 						if (event.getProperty().equals(
-								Configuration2Constants.IMAGE_ENABLE)
+								Configuration2Constants.IMAGE_CUSTOM)
 								|| event.getProperty().equals(
 										Configuration2Constants.IMAGE_VALUE)) {
 							if (getConfigurationFormEditor()
 									.getPreferenceStore()
 									.getBoolean(
-											Configuration2Constants.IMAGE_ENABLE)) {
+											Configuration2Constants.IMAGE_CUSTOM)) {
 								String imageText = event.getNewValue()
 										.toString();
 								imageText = imageText.substring(imageText
@@ -598,7 +596,7 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 		// TODO see if fix image is still necessary
 		// fix image
 		boolean imageenable = getConfigurationFormEditor().getPreferenceStore()
-				.getBoolean(Configuration2Constants.IMAGE_ENABLE);
+				.getBoolean(Configuration2Constants.IMAGE_CUSTOM);
 		if (imageenable) {
 			vim.setQemuImagePath(getConfigurationFormEditor()
 					.getPreferenceStore().getString(

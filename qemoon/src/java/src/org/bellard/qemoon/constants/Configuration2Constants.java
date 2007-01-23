@@ -49,7 +49,11 @@ public interface Configuration2Constants {
 
 	public static final String IMAGE_VALUE = "image.value";
 
-	public static final String IMAGE_ENABLE = "image.enable";
+	public static final String IMAGE_DEFAULT_VALUE = "image.default.value";
+
+	public static final String SNAPSHOT_VALUE = "snapshot.value";
+
+	public static final String IMAGE_CUSTOM = "image.enable";
 
 	public static final String AUDIO_VALUE = "audio.value";
 

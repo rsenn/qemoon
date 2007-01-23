@@ -27,6 +27,7 @@ package org.bellard.qemoon.preferences;
 
 import org.bellard.qemoon.Activator;
 import org.bellard.qemoon.constants.Configuration2Constants;
+import org.bellard.qemoon.constants.PreferenceConstants;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.FileFieldEditor;
 
@@ -40,13 +41,11 @@ public class CDROMPreferencePage extends FieldEditorPreferencePage {
 
 	public static final String PREFERENCES_CDROM_DESCRIPTION = "preferences.cdrom.description";
 
-	public static final String PREFERENCES_CDROM_TITLE = "preferences.cdrom.title";
-
 	/**
 	 */
 	public CDROMPreferencePage() {
 		super(Activator.getDefault().getMessages().getString(
-				PREFERENCES_CDROM_TITLE), GRID);
+				PreferenceConstants.PREFERENCES_CDROM_TITLE), GRID);
 
 	}
 

@@ -27,6 +27,7 @@ package org.bellard.qemoon.preferences;
 
 import org.bellard.qemoon.Activator;
 import org.bellard.qemoon.constants.Configuration2Constants;
+import org.bellard.qemoon.constants.PreferenceConstants;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.FileFieldEditor;
@@ -42,14 +43,10 @@ import org.eclipse.swt.widgets.Listener;
  */
 public class QemuImagePreferencePage extends FieldEditorPreferencePage {
 
-	public static final String PREFERENCES_IMAGE_LABEL = "preferences.image.label";
-
-	private static final String PREFERENCES_IMAGE_CHECKLABEL = "preferences.image.checklabel";
-
 	/**
 	 */
 	public QemuImagePreferencePage() {
-		super(Activator.getDefault().getMessages().getString("preferences.image.title"), GRID);
+		super(Activator.getDefault().getMessages().getString(PreferenceConstants.PREFERENCES_IMAGE_TITLE), GRID);
 	}
 
 	/*
@@ -61,13 +58,13 @@ public class QemuImagePreferencePage extends FieldEditorPreferencePage {
 	protected void createFieldEditors() {
 
 		MyBooleanFieldEditor enableImage = new MyBooleanFieldEditor(
-				Configuration2Constants.IMAGE_ENABLE, Activator.getDefault().getMessages()
-						.getString(PREFERENCES_IMAGE_CHECKLABEL),
+				Configuration2Constants.IMAGE_CUSTOM, Activator.getDefault().getMessages()
+						.getString(PreferenceConstants.PREFERENCES_IMAGE_CHECKLABEL),
 				getFieldEditorParent());
 
 		final FileFieldEditor imageSelect = new FileFieldEditor(
 				Configuration2Constants.IMAGE_VALUE, Activator.getDefault().getMessages()
-						.getString(PREFERENCES_IMAGE_LABEL),
+						.getString(PreferenceConstants.PREFERENCES_IMAGE_LABEL),
 				getFieldEditorParent());
 		imageSelect.setEmptyStringAllowed(true);
 
@@ -85,12 +82,20 @@ public class QemuImagePreferencePage extends FieldEditorPreferencePage {
 				});
 
 		if (!getPreferenceStore().getBoolean(
-				Configuration2Constants.IMAGE_ENABLE)) {
+				Configuration2Constants.IMAGE_CUSTOM)) {
 			imageSelect.setEnabled(false, getFieldEditorParent());
 		}
 
+		
+		MyBooleanFieldEditor snapshotImage = new MyBooleanFieldEditor(
+				Configuration2Constants.SNAPSHOT_VALUE, Activator.getDefault().getMessages()
+						.getString(PreferenceConstants.PREFERENCES_IMAGE_SNAPSHOT),
+				getFieldEditorParent());
+		
+		
 		addField(enableImage);
 		addField(imageSelect);
+		addField(snapshotImage);
 	}
 
 	class MyBooleanFieldEditor extends BooleanFieldEditor {
@@ -99,7 +104,6 @@ public class QemuImagePreferencePage extends FieldEditorPreferencePage {
 		 */
 		public MyBooleanFieldEditor() {
 			super();
-			// TODO Auto-generated constructor stub
 		}
 
 		/**
@@ -109,7 +113,6 @@ public class QemuImagePreferencePage extends FieldEditorPreferencePage {
 		 */
 		public MyBooleanFieldEditor(String name, String label, Composite parent) {
 			super(name, label, parent);
-			// TODO Auto-generated constructor stub
 		}
 
 		/**
@@ -121,7 +124,6 @@ public class QemuImagePreferencePage extends FieldEditorPreferencePage {
 		public MyBooleanFieldEditor(String name, String labelText, int style,
 				Composite parent) {
 			super(name, labelText, style, parent);
-			// TODO Auto-generated constructor stub
 		}
 
 		public Button getChangeControl(Composite parent) {

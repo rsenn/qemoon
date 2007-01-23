@@ -58,15 +58,17 @@ public class QEmuMonitor {
 
 	public final static String STOP_COMMAND = "stop";
 
+	public final static String STOP_CAPTURE_COMMAND = "stopcapture";
+
 	public final static String RESUME_COMMAND = "cont";
 
 	public final static String GDBSERVER_COMMAND = "gdbserver";
 
-	public final static String VMEMORYDUMP_COMMAND = "x/fmt";
+	public final static String VMEMORYDUMP_COMMAND = "x/";
 
-	public final static String PMEMORYDUMP_COMMAND = "xp/fmt";
+	public final static String PMEMORYDUMP_COMMAND = "xp/";
 
-	public final static String PRINT_COMMAND = "print";
+	public final static String PRINT_COMMAND = "print/";
 
 	public final static String SENDKEY_COMMAND = "sendkey";
 

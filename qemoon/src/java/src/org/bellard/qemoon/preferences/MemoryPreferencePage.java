@@ -28,6 +28,7 @@ package org.bellard.qemoon.preferences;
 import org.bellard.qemoon.Activator;
 import org.bellard.qemoon.components.MemoryFieldEditor;
 import org.bellard.qemoon.constants.Configuration2Constants;
+import org.bellard.qemoon.constants.PreferenceConstants;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 
 /**
@@ -36,16 +37,10 @@ import org.eclipse.jface.preference.FieldEditorPreferencePage;
  */
 public class MemoryPreferencePage extends FieldEditorPreferencePage {
 
-	public static final String PREFERENCES_MEMORY_LABEL = "preferences.memory.label";
-
-	public static final String PREFERENCES_MEMORY_DESCRIPTION = "preferences.memory.description";
-
-	public static final String PREFERENCES_MEMORY_TITLE = "preferences.memory.title";
-
 	/**
 	 */
 	public MemoryPreferencePage() {
-		super(Activator.getDefault().getMessages().getString(PREFERENCES_MEMORY_TITLE), GRID);
+		super(Activator.getDefault().getMessages().getString(PreferenceConstants.PREFERENCES_MEMORY_TITLE), GRID);
 	}
 
 	/*
@@ -57,7 +52,7 @@ public class MemoryPreferencePage extends FieldEditorPreferencePage {
 	protected void createFieldEditors() {
 		MemoryFieldEditor memory = new MemoryFieldEditor(
 				Configuration2Constants.MEMORY_VALUE, Activator.getDefault().getMessages()
-						.getString(PREFERENCES_MEMORY_LABEL),
+						.getString(PreferenceConstants.PREFERENCES_MEMORY_LABEL),
 				getFieldEditorParent());
 		memory.setEmptyStringAllowed(true);
 		addField(memory);

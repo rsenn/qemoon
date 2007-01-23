@@ -60,9 +60,23 @@ public class GeneralPreferenceInitializer extends AbstractPreferenceInitializer 
 										PreferenceConstants.PREFERENCES_QEMU_PATH_VALUE))
 				.toOSString();
 
+		String qemuimgPath = Activator
+		.getDefault()
+		.getPlatformPath()
+		.append(
+				Activator
+						.getDefault()
+						.getPreferenceDefault()
+						.getOsspecificString(
+								PreferenceConstants.PREFERENCES_QEMUIMG_PATH_VALUE))
+		.toOSString();
+		
+		
 		// store properties
 		store.setDefault(PreferenceConstants.PREFERENCES_QEMU_PATH_VALUE,
 				qemuPath);
+		store.setDefault(PreferenceConstants.PREFERENCES_QEMUIMG_PATH_VALUE,
+				qemuimgPath);
 		store.setDefault(PreferenceConstants.PREFERENCES_MONITOR_PORT_VALUE,
 				Activator.getDefault().getPreferenceDefault().getDefaultString(
 						PreferenceConstants.PREFERENCES_MONITOR_PORT_VALUE));

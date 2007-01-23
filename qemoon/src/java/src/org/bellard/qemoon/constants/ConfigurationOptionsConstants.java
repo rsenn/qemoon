@@ -27,8 +27,10 @@ package org.bellard.qemoon.constants;
 
 /**
  * @author Eric Bellard - eric.bellard@gmail.com
- *
+ * 
  */
 public interface ConfigurationOptionsConstants {
+
+	public final static String DEFAULT_DISK_NAME = "disk.img";
 
 }
