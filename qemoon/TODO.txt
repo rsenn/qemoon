@@ -5,6 +5,9 @@
 - option display are not centered with the label and the icon (VM configuration editor)
 - qemu communication in windows
 
+
+Example project : don't copy freedos image
+
 * Define an error management policy 2
 
 * gui :
