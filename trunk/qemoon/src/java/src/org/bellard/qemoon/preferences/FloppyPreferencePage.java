@@ -27,6 +27,7 @@ package org.bellard.qemoon.preferences;
 
 import org.bellard.qemoon.Activator;
 import org.bellard.qemoon.constants.Configuration2Constants;
+import org.bellard.qemoon.constants.PreferenceConstants;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.FileFieldEditor;
 
@@ -42,12 +43,10 @@ public class FloppyPreferencePage extends FieldEditorPreferencePage {
 
 	public static final String PREFERENCES_FLOPPY_DESCRIPTION = "preferences.floppy.description";
 
-	public static final String PREFERENCES_FLOPPY_TITLE = "preferences.floppy.title";
-
 	/**
 	 */
 	public FloppyPreferencePage() {
-		super(Activator.getDefault().getMessages().getString(PREFERENCES_FLOPPY_TITLE), GRID);
+		super(Activator.getDefault().getMessages().getString(PreferenceConstants.PREFERENCES_FLOPPY_TITLE), GRID);
 
 	}
 

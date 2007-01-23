@@ -33,11 +33,45 @@ public class ValidatorUtils {
 
 	/**
 	 * Return trus if s is empty or null
+	 * 
 	 * @param s
 	 * @return
 	 */
 	public final static boolean isEmptyOrNull(String s) {
 		return s == null || "".equals(s);
+
+	}
+
+	/**
+	 * 
+	 * Checks if the value can safely be converted to a int primitive.
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * @param value
+	 *            The value validation is being performed on.
+	 * 
+	 * 
+	 */
+
+	public static Integer formatInt(String value) {
+
+		if (value == null) {
+			return null;
+		}
+
+		try {
+			return new Integer(value);
+		} catch (NumberFormatException e) {
+			return null;
+		}
+	}
+
+	public static boolean isInt(String value) {
+
+		return (formatInt(value) != null);
 
 	}
 

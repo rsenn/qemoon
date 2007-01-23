@@ -24,7 +24,7 @@ package org.bellard.qemoon.runtime;
 
 /**
  * @author Eric Bellard - eric.bellard@gmail.com
- *
+ * 
  */
 public interface QEmuManager {
 
@@ -36,4 +36,56 @@ public interface QEmuManager {
 
 	public abstract void pause();
 
+	public abstract void help();
+
+	public abstract void commit();
+
+	public void networkInfo();
+
+	public void blockInfo();
+
+	public void registersInfo();
+
+	public void historyInfo();
+
+	public void pciInfo();
+
+	public void usbInfo();
+
+	public void usbhostIfo();
+
+	public void captureInfo();
+
+	public void eject(String device, boolean force);
+
+	public void changeDevice(String filename);
+
+	public void screenDump(String filename);
+
+	public void waveCapture(String filename, int frequency, int bits,
+			int channels);
+
+	public void stopCapture(int index);
+
+	public void log(String item);
+
+	public void saveVM(String filename);
+
+	public void loadVM(String filename);
+
+	public void gdbserver(int port);
+
+	public void virtualMemoryDump(String format, String addr);
+
+	public void physicalMemoryDump(String format, String addr);
+
+	public void print(String format, String expression);
+	
+	public void sendKey(String keyCode);
+	
+	public void systemReset();
+	
+	public void usbAdd(String deviceName);
+	
+	public void usbDell(String deviceName);
 }

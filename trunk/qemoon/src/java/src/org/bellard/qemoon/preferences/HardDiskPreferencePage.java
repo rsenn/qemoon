@@ -27,6 +27,7 @@ package org.bellard.qemoon.preferences;
 
 import org.bellard.qemoon.Activator;
 import org.bellard.qemoon.constants.Configuration2Constants;
+import org.bellard.qemoon.constants.PreferenceConstants;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.FileFieldEditor;
 
@@ -37,16 +38,20 @@ import org.eclipse.jface.preference.FileFieldEditor;
 public class HardDiskPreferencePage extends FieldEditorPreferencePage {
 
 	public static final String PREFERENCES_HARDDISK_HDD_LABEL = "preferences.harddisk.hdd.label";
+
 	public static final String PREFERENCES_HARDDISK_HDC_LABEL = "preferences.harddisk.hdc.label";
+
 	public static final String PREFERENCES_HARDDISK_HDB_LABEL = "preferences.harddisk.hdb.label";
+
 	public static final String PREFERENCES_HARDDISK_HDA_LABEL = "preferences.harddisk.hda.label";
+
 	public static final String PREFERENCES_HARDDISK_DESCRIPTION = "preferences.harddisk.description";
-	public static final String PREFERENCES_HARDDISK_TITLE = "preferences.harddisk.title";
 
 	/**
 	 */
 	public HardDiskPreferencePage() {
-		super(Activator.getDefault().getMessages().getString(PREFERENCES_HARDDISK_TITLE), GRID);
+		super(Activator.getDefault().getMessages().getString(
+				PreferenceConstants.PREFERENCES_HARDDISK_TITLE), GRID);
 
 	}
 
@@ -58,24 +63,32 @@ public class HardDiskPreferencePage extends FieldEditorPreferencePage {
 	@Override
 	protected void createFieldEditors() {
 
-		FileFieldEditor hda = new FileFieldEditor(Configuration2Constants.HDA_VALUE, Activator.getDefault().getMessages()
-				.getString(PREFERENCES_HARDDISK_HDA_LABEL),
+		FileFieldEditor hda = new FileFieldEditor(
+				Configuration2Constants.HDA_VALUE, Activator.getDefault()
+						.getMessages()
+						.getString(PREFERENCES_HARDDISK_HDA_LABEL),
 				getFieldEditorParent());
-		FileFieldEditor hdb = new FileFieldEditor(Configuration2Constants.HDB_VALUE, Activator.getDefault().getMessages()
-				.getString(PREFERENCES_HARDDISK_HDB_LABEL),
+		FileFieldEditor hdb = new FileFieldEditor(
+				Configuration2Constants.HDB_VALUE, Activator.getDefault()
+						.getMessages()
+						.getString(PREFERENCES_HARDDISK_HDB_LABEL),
 				getFieldEditorParent());
-		FileFieldEditor hdc = new FileFieldEditor(Configuration2Constants.HDC_VALUE, Activator.getDefault().getMessages()
-				.getString(PREFERENCES_HARDDISK_HDC_LABEL),
+		FileFieldEditor hdc = new FileFieldEditor(
+				Configuration2Constants.HDC_VALUE, Activator.getDefault()
+						.getMessages()
+						.getString(PREFERENCES_HARDDISK_HDC_LABEL),
 				getFieldEditorParent());
-		FileFieldEditor hdd = new FileFieldEditor(Configuration2Constants.HDD_VALUE, Activator.getDefault().getMessages()
-				.getString(PREFERENCES_HARDDISK_HDD_LABEL),
+		FileFieldEditor hdd = new FileFieldEditor(
+				Configuration2Constants.HDD_VALUE, Activator.getDefault()
+						.getMessages()
+						.getString(PREFERENCES_HARDDISK_HDD_LABEL),
 				getFieldEditorParent());
 
 		hda.setEmptyStringAllowed(true);
 		hdb.setEmptyStringAllowed(true);
 		hdc.setEmptyStringAllowed(true);
 		hdd.setEmptyStringAllowed(true);
-		
+
 		addField(hda);
 		addField(hdb);
 		addField(hdc);

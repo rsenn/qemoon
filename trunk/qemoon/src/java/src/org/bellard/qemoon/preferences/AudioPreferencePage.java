@@ -29,6 +29,7 @@ import org.bellard.qemoon.Activator;
 import org.bellard.qemoon.components.ComboFieldEditor;
 import org.bellard.qemoon.components.ControlEnableBooleanFieldEditor;
 import org.bellard.qemoon.constants.Configuration2Constants;
+import org.bellard.qemoon.constants.PreferenceConstants;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 
 /**
@@ -41,12 +42,10 @@ public class AudioPreferencePage extends FieldEditorPreferencePage {
 	public static final String PREFERENCES_AUDIO_LABEL = "preferences.audio.label";
 	public static final String PREFERENCES_AUDIO_CHECKLABEL = "preferences.audio.checklabel";
 	public static final String PREFERENCES_AUDIO_DESCRIPTION = "preferences.audio.description";
-	public static final String PREFERENCES_AUDIO_TITLE = "preferences.audio.title";
-
 	/**
 	 */
 	public AudioPreferencePage() {
-		super(Activator.getDefault().getMessages().getString(PREFERENCES_AUDIO_TITLE), GRID);
+		super(Activator.getDefault().getMessages().getString(PreferenceConstants.PREFERENCES_AUDIO_TITLE), GRID);
 
 	}
 

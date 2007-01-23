@@ -25,18 +25,13 @@
  */
 package org.bellard.qemoon.wizards;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-
 import org.apache.log4j.Logger;
 import org.bellard.qemoon.Activator;
 import org.bellard.qemoon.constants.Configuration2Constants;
 import org.bellard.qemoon.model.VM;
 import org.bellard.qemoon.utils.ErrorUtils;
 import org.bellard.qemoon.views.VMNavigationView;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
@@ -93,16 +88,18 @@ public class NewExampleProjectWizard extends Wizard implements INewWizard {
 			VM v = new VM(name);
 			// add the vm to the view
 			// copy freedosPath
-			IPath freedosPath = Activator.getDefault().getPlatformPath().append("freedos.dsk");
-			IFile destination = v.getProject().getFile("freedos.dsk");
-			destination.create(new BufferedInputStream(new FileInputStream(
-					freedosPath.toOSString())), false,
-					new NullProgressMonitor());
+			IPath imagePath = Activator.getDefault().getPlatformPath()
+					.append("linux.img");
+
+			 // IFile destination = v.getProject().getFile("freedos.dsk");
+			// destination.create(new BufferedInputStream(new FileInputStream(
+			// freedosPath.toOSString())), false,
+			// new NullProgressMonitor());
 			v.getPreferenceStore().setValue(
-					Configuration2Constants.IMAGE_ENABLE, true);
+					Configuration2Constants.IMAGE_CUSTOM, true);
 			v.getPreferenceStore().setValue(
 					Configuration2Constants.IMAGE_VALUE,
-					destination.getLocation().toString());
+					imagePath.toString());
 			VMNavigationView view = Activator.getDefault()
 					.getVMNavigationView();
 

@@ -113,17 +113,33 @@ public class NetworkMonitor {
 	}
 
 	public void deinit() {
-		try {
-			out.close();
-			in.close();
-			clientSocket.close();
-			if (serversocket) {
-				serverSocket.close();
+		if (out != null) {
+			try {
+				out.close();
+			} catch (Throwable e) {
+				// nothing to do
 			}
-		} catch (IOException e) {
-			String message = "pb when closing streams and sockets...";
-			logger.debug(message, e);
-			// nothing to do
+		}
+		if (in != null) {
+			try {
+				in.close();
+			} catch (Throwable e) {
+				// nothing to do
+			}
+		}
+		if (clientSocket != null) {
+			try {
+				clientSocket.close();
+			} catch (Throwable e) {
+				// nothing to do
+			}
+		}
+		if (serversocket) {
+			try {
+				serverSocket.close();
+			} catch (Throwable e) {
+				// nothing to do
+			}
 		}
 
 	}

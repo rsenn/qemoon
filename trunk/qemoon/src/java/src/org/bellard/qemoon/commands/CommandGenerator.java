@@ -196,16 +196,25 @@ public class CommandGenerator {
 		l.add(c);
 
 		// MUST BE THE LAST
-		// image or snapshotcommand
-		if (store.getBoolean(Configuration2Constants.IMAGE_ENABLE)) {
-			if (!ValidatorUtils.isEmptyOrNull(store
-					.getString(Configuration2Constants.IMAGE_VALUE))) {
-				c = new CommandArgument(p.getString(CONFIGURATION_SNAPSHOT),
-						Configuration2Constants.IMAGE_VALUE, store
-								.getString(Configuration2Constants.IMAGE_VALUE));
-				l.add(c);
-			}
+		// image or snapshot image command
+		String image=null;
+		if (store.getBoolean(Configuration2Constants.IMAGE_CUSTOM)) {
+			image= store
+			.getString(Configuration2Constants.IMAGE_VALUE);
+		} else {
+			// use default image path
+			image = store
+			.getString(Configuration2Constants.IMAGE_DEFAULT_VALUE);
 		}
+
+		if (store.getBoolean(Configuration2Constants.SNAPSHOT_VALUE)) {
+			c = new CommandArgument(p.getString(CONFIGURATION_SNAPSHOT),
+					Configuration2Constants.IMAGE_VALUE, image);
+		} else {
+			c = new SimpleCommandArgument(image);
+			
+		}
+		l.add(c);
 
 		return l;
 	}

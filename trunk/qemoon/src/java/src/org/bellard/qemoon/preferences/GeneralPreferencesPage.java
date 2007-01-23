@@ -72,6 +72,14 @@ public class GeneralPreferencesPage extends FieldEditorPreferencePage implements
 				getFieldEditorParent());
 		addField(qemu);
 
+		FileFieldEditor qemuimg = new FileFieldEditor(
+				PreferenceConstants.PREFERENCES_QEMUIMG_PATH_VALUE,
+				Activator.getDefault().getMessages().getString(
+						PreferenceConstants.PREFERENCES_QEMUIMG_PATH_LABEL),
+				getFieldEditorParent());
+		addField(qemuimg);
+		
+		
 		// DirectoryFieldEditor kqemuDfe = new
 		// DirectoryFieldEditor(PreferenceConstants.PREFERENCES_KQEMU_PATH_VALUE,
 		// Activator.getDefault().getMessages().getString(PreferenceConstants.PREFERENCES_KQEMU_PATH_LABEL),

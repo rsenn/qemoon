@@ -57,6 +57,7 @@ public class RessourcesUtils {
 	public final static IWorkspaceRunnable createRenameVMOperation(
 			final String oldname, final String newname) {
 
+		// TODO move image if necessary IMAGE_DEFAULT_VALUE
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		final IProject project = workspace.getRoot().getProject(oldname);
 
@@ -142,10 +143,11 @@ public class RessourcesUtils {
 						newVM.getPreferenceStore().setValue(
 								Configuration2Constants.IMAGE_VALUE,
 								newImagePath);
+						// TODO IMAGE_DEFAULT_VALUE
 						newVM.getPreferenceStore().setValue(
-								Configuration2Constants.IMAGE_ENABLE,
+								Configuration2Constants.IMAGE_CUSTOM,
 								vm.getPreferenceStore().getString(
-										Configuration2Constants.IMAGE_ENABLE));
+										Configuration2Constants.IMAGE_CUSTOM));
 						try {
 							newVM.getPreferenceStore().save();
 						} catch (IOException e) {
