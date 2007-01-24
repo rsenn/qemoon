@@ -5,9 +5,6 @@
 - option display are not centered with the label and the icon (VM configuration editor)
 - qemu communication in windows
 
-
-Example project : don't copy freedos image
-
 * Define an error management policy 2
 
 * gui :
@@ -20,7 +17,6 @@ Example project : don't copy freedos image
 - launch qemu in a java panel: see what's possible in swing or SWT
 
 * log management 4
-- choose log4j or log jdk 
 - choose levels to use
 - gui console (see up)
 
@@ -39,19 +35,19 @@ Example project : don't copy freedos image
 
 * industrialisation :
 - code quality (refactor, rename, commentaries) 3
-- multiplateform build : macosx avec ant 2
+- multiplateform build : macosx avec ant 4
 - documentation 4
 - icons/images 4
 - web site 3
 - publish sources 3
-- integrate kqemu 3
+- integrate kqemu 1
 - intégration test image 2
 
 * better install process
-- creation d'un installer: 4 => zip suffisant au départ
-	+ windows : nullsoft installer
-	+ linux : rpm, debian/ubuntu
-	+ macosx : see what we can do
+- create installer  => zip ok to start
+	+ windows : nullsoft installer 4
+	+ linux : rpm, debian/ubuntu 1
+	+ macosx : see what we can do 1
 
 * i18n 5
-- écrire des fichiers multilingues => communauté fera le boulot si besoin
+- i18n management => community will do it if the project success
