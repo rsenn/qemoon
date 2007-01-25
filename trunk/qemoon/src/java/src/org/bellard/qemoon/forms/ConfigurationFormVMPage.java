@@ -190,137 +190,36 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 		left.setLayout(layout);
 		left.setLayoutData(new TableWrapData(TableWrapData.FILL));
 
-		//
-		// // create commands section
-		Composite commandsComposite = createSection(toolkit, form, left,
-				"configuration.vm.commands.title",
-				"configuration.vm.commands.description", 3);
+		// create command panel
+		createCommandPanel(form, toolkit, left);
 
-		toolkit.createLabel(left, "");
-
-		// start link
-		startlink = toolkit.createImageHyperlink(commandsComposite, SWT.WRAP);
-		// separator
-		toolkit.createLabel(commandsComposite, "");
-		toolkit.createLabel(commandsComposite, "");
-
-		// pause link
-		pauselink = toolkit.createImageHyperlink(commandsComposite, SWT.WRAP);
-
-		startlink.addHyperlinkListener(new HyperlinkAdapter() {
-			public void linkActivated(HyperlinkEvent e) {
-				logger.info("start link activated!");
-				if (isStarted) {
-					stopVM();
-					isStarted = false;
-					isPaused = false;
-				} else {
-					startVM();
-					isStarted = true;
-					isPaused = false;
-				}
-			}
-		});
-		startlink.setText(Activator.getDefault().getMessages().getString(
-				"configuration.vm.commands.start"));
-		startlink.setImage(activator.getImageManager().getStartImage22x22());
-		startlink.setToolTipText(Activator.getDefault().getMessages()
-				.getString("configuration.vm.commands.start"));
-
-		pauselink.addHyperlinkListener(new HyperlinkAdapter() {
-			public void linkActivated(HyperlinkEvent e) {
-				logger.info("pause Link activated!");
-				if (isPaused) {
-					resumeVM();
-					isPaused = false;
-				} else {
-					pauseVM();
-					isPaused = true;
-				}
-
-			}
-		});
-		pauselink.setText(Activator.getDefault().getMessages().getString(
-				"configuration.vm.commands.pause"));
-		// pauselink.setImage(activator.getImageManager().getPauseImage22x22());
-		pauselink.setToolTipText(Activator.getDefault().getMessages()
-				.getString("configuration.vm.commands.pause"));
-		setEnablePauseLink(false);
-
-		// separator
-		toolkit.createLabel(commandsComposite, "");
-		toolkit.createLabel(commandsComposite, "");
-
-		// edit config link
-		ImageHyperlink editConfiglink = toolkit.createImageHyperlink(
-				commandsComposite, SWT.WRAP);
-		editConfiglink.addHyperlinkListener(new HyperlinkAdapter() {
-			public void linkActivated(HyperlinkEvent e) {
-				logger.info("Edit configuration Link activated!");
-				createAndDisplayPreferenceDialog(form,
-						VMConfigurationPreferenceManager.MEMORY);
-			}
-		});
-		editConfiglink.setText(Activator.getDefault().getMessages().getString(
-				"configuration.vm.commands.editconfig"));
-		editConfiglink.setImage(Activator.getImageDescriptor(
-				"icons/22x22/config.png").createImage());
-		editConfiglink.setToolTipText(Activator.getDefault().getMessages()
-				.getString("configuration.vm.commands.editconfig"));
-		// separator
-		toolkit.createLabel(commandsComposite, "");
-		toolkit.createLabel(commandsComposite, "");
-
-		// clone vm link
-		ImageHyperlink clonevmlink = toolkit.createImageHyperlink(
-				commandsComposite, SWT.WRAP);
-		clonevmlink.addHyperlinkListener(new HyperlinkAdapter() {
-			public void linkActivated(HyperlinkEvent e) {
-				logger.info("Edit configuration Link activated!");
-				// clone vm
-				RessourcesUtils.cloneProject(getConfigurationFormEditor()
-						.getVMConfiguration().getVim());
-			}
-		});
-		clonevmlink.setText(Activator.getDefault().getMessages().getString(
-				"configuration.vm.commands.clonevm"));
-		clonevmlink.setImage(Activator.getImageDescriptor(
-				"icons/22x22/clone.png").createImage());
-		clonevmlink.setToolTipText(Activator.getDefault().getMessages()
-				.getString("configuration.vm.commands.clonevm"));
-		// separator
-		toolkit.createLabel(commandsComposite, "");
-		toolkit.createLabel(commandsComposite, "");
-
-		// notes
-		Composite notesComposite = createSection(toolkit, form, left,
-				"configuration.vm.notes.title",
-				"configuration.vm.notes.description", 1);
-
-		notesComposite.setLayout(new FillLayout());
-		configText = new Text(notesComposite, SWT.BORDER | SWT.MULTI | SWT.WRAP);
-		configText.setText(getConfigurationFormEditor().getPreferenceStore()
-				.getString(VM_CONFIGURATION_NOTES_VALUE));
-		configText.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				getConfigurationFormEditor().getPreferenceStore().setValue(
-						VM_CONFIGURATION_NOTES_VALUE, configText.getText());
-				getConfigurationFormEditor().editorDirtyStateChanged();
-			}
-
-		});
+		// toolkit.createLabel(left, "");
 
 		// TODO to better for multi line
 
 		// right panel
-		Composite right = toolkit.createComposite(body);
-		layout = new TableWrapLayout();
-		layout.verticalSpacing = 20;
-		right.setLayout(layout);
-		right.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB));
+		// Composite right = toolkit.createComposite(body);
+		// layout = new TableWrapLayout();
+		// layout.verticalSpacing = 20;
+		// right.setLayout(layout);
+		// right.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB));
 
 		// device composite
-		Composite deviceComposite = createSection(toolkit, form, right,
+		createDevicePanel(form, toolkit, left);
+
+		// notes
+		// createNotesPanel(form, toolkit, left);
+
+	}
+
+	/**
+	 * @param form
+	 * @param toolkit
+	 * @param composite
+	 */
+	private void createDevicePanel(final ScrolledForm form,
+			FormToolkit toolkit, Composite composite) {
+		Composite deviceComposite = createSection(toolkit, form, composite,
 				"configuration.vm.device.title",
 				"configuration.vm.device.description", 2);
 
@@ -529,7 +428,138 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 		// VMConfigurationPreferenceManager.KEYBOARD);
 		// }
 		// });
+	}
 
+	/**
+	 * @param form
+	 * @param toolkit
+	 * @param composite
+	 */
+	private void createNotesPanel(final ScrolledForm form, FormToolkit toolkit,
+			Composite composite) {
+		Composite notesComposite = createSection(toolkit, form, composite,
+				"configuration.vm.notes.title",
+				"configuration.vm.notes.description", 1);
+
+		notesComposite.setLayout(new FillLayout());
+		configText = new Text(notesComposite, SWT.BORDER | SWT.MULTI | SWT.WRAP);
+		configText.setText(getConfigurationFormEditor().getPreferenceStore()
+				.getString(VM_CONFIGURATION_NOTES_VALUE));
+		configText.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				getConfigurationFormEditor().getPreferenceStore().setValue(
+						VM_CONFIGURATION_NOTES_VALUE, configText.getText());
+				getConfigurationFormEditor().editorDirtyStateChanged();
+			}
+
+		});
+	}
+
+	/**
+	 * @param form
+	 * @param toolkit
+	 * @param composite
+	 */
+	private void createCommandPanel(final ScrolledForm form,
+			FormToolkit toolkit, Composite composite) {
+		// // create commands section
+		Composite commandsComposite = createSection(toolkit, form, composite,
+				"configuration.vm.commands.title",
+				"configuration.vm.commands.description", 3);
+
+		// start link
+		startlink = toolkit.createImageHyperlink(commandsComposite, SWT.WRAP);
+		// separator
+		toolkit.createLabel(commandsComposite, "");
+		toolkit.createLabel(commandsComposite, "");
+
+		// pause link
+		pauselink = toolkit.createImageHyperlink(commandsComposite, SWT.WRAP);
+
+		startlink.addHyperlinkListener(new HyperlinkAdapter() {
+			public void linkActivated(HyperlinkEvent e) {
+				logger.info("start link activated!");
+				if (isStarted) {
+					stopVM();
+					isStarted = false;
+					isPaused = false;
+				} else {
+					startVM();
+					isStarted = true;
+					isPaused = false;
+				}
+			}
+		});
+		startlink.setText(Activator.getDefault().getMessages().getString(
+				"configuration.vm.commands.start"));
+		startlink.setImage(activator.getImageManager().getStartImage22x22());
+		startlink.setToolTipText(Activator.getDefault().getMessages()
+				.getString("configuration.vm.commands.start"));
+
+		pauselink.addHyperlinkListener(new HyperlinkAdapter() {
+			public void linkActivated(HyperlinkEvent e) {
+				logger.info("pause Link activated!");
+				if (isPaused) {
+					resumeVM();
+					isPaused = false;
+				} else {
+					pauseVM();
+					isPaused = true;
+				}
+
+			}
+		});
+		pauselink.setText(Activator.getDefault().getMessages().getString(
+				"configuration.vm.commands.pause"));
+		// pauselink.setImage(activator.getImageManager().getPauseImage22x22());
+		pauselink.setToolTipText(Activator.getDefault().getMessages()
+				.getString("configuration.vm.commands.pause"));
+		setEnablePauseLink(false);
+
+		// separator
+		toolkit.createLabel(commandsComposite, "");
+		toolkit.createLabel(commandsComposite, "");
+
+		// edit config link
+		ImageHyperlink editConfiglink = toolkit.createImageHyperlink(
+				commandsComposite, SWT.WRAP);
+		editConfiglink.addHyperlinkListener(new HyperlinkAdapter() {
+			public void linkActivated(HyperlinkEvent e) {
+				logger.info("Edit configuration Link activated!");
+				createAndDisplayPreferenceDialog(form,
+						VMConfigurationPreferenceManager.MEMORY);
+			}
+		});
+		editConfiglink.setText(Activator.getDefault().getMessages().getString(
+				"configuration.vm.commands.editconfig"));
+		editConfiglink.setImage(Activator.getImageDescriptor(
+				"icons/22x22/config.png").createImage());
+		editConfiglink.setToolTipText(Activator.getDefault().getMessages()
+				.getString("configuration.vm.commands.editconfig"));
+		// separator
+		toolkit.createLabel(commandsComposite, "");
+		toolkit.createLabel(commandsComposite, "");
+
+		// clone vm link
+		ImageHyperlink clonevmlink = toolkit.createImageHyperlink(
+				commandsComposite, SWT.WRAP);
+		clonevmlink.addHyperlinkListener(new HyperlinkAdapter() {
+			public void linkActivated(HyperlinkEvent e) {
+				logger.info("Edit configuration Link activated!");
+				// clone vm
+				RessourcesUtils.cloneProject(getConfigurationFormEditor()
+						.getVMConfiguration().getVim());
+			}
+		});
+		clonevmlink.setText(Activator.getDefault().getMessages().getString(
+				"configuration.vm.commands.clonevm"));
+		clonevmlink.setImage(Activator.getImageDescriptor(
+				"icons/22x22/clone.png").createImage());
+		clonevmlink.setToolTipText(Activator.getDefault().getMessages()
+				.getString("configuration.vm.commands.clonevm"));
+		// separator
+		toolkit.createLabel(commandsComposite, "");
+		toolkit.createLabel(commandsComposite, "");
 	}
 
 	/**
@@ -545,7 +575,7 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 				| Section.TWISTIE | Section.TITLE_BAR | Section.EXPANDED);
 
 		TableWrapLayout layout = new TableWrapLayout();
-		layout.numColumns = 2;
+		layout.numColumns = 1;
 		layout.verticalSpacing = 20;
 		composite.setLayout(layout);
 
@@ -609,8 +639,6 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 
 		QEmuManager manager = Activator.getDefault().getQEmuManager(vim);
 		manager.start();
-		
-		
 
 		becomeStop();
 		setEnablePauseLink(true);
