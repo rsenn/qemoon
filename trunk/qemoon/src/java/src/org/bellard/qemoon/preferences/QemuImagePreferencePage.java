@@ -26,14 +26,13 @@
 package org.bellard.qemoon.preferences;
 
 import org.bellard.qemoon.Activator;
+import org.bellard.qemoon.components.QBooleanFieldEditor;
 import org.bellard.qemoon.constants.Configuration2Constants;
 import org.bellard.qemoon.constants.PreferenceConstants;
-import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.FileFieldEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
@@ -57,7 +56,7 @@ public class QemuImagePreferencePage extends FieldEditorPreferencePage {
 	@Override
 	protected void createFieldEditors() {
 
-		MyBooleanFieldEditor enableImage = new MyBooleanFieldEditor(
+		QBooleanFieldEditor enableImage = new QBooleanFieldEditor(
 				Configuration2Constants.IMAGE_CUSTOM, Activator.getDefault().getMessages()
 						.getString(PreferenceConstants.PREFERENCES_IMAGE_CHECKLABEL),
 				getFieldEditorParent());
@@ -87,7 +86,7 @@ public class QemuImagePreferencePage extends FieldEditorPreferencePage {
 		}
 
 		
-		MyBooleanFieldEditor snapshotImage = new MyBooleanFieldEditor(
+		QBooleanFieldEditor snapshotImage = new QBooleanFieldEditor(
 				Configuration2Constants.SNAPSHOT_VALUE, Activator.getDefault().getMessages()
 						.getString(PreferenceConstants.PREFERENCES_IMAGE_SNAPSHOT),
 				getFieldEditorParent());
@@ -96,40 +95,6 @@ public class QemuImagePreferencePage extends FieldEditorPreferencePage {
 		addField(enableImage);
 		addField(imageSelect);
 		addField(snapshotImage);
-	}
-
-	class MyBooleanFieldEditor extends BooleanFieldEditor {
-		/**
-		 * 
-		 */
-		public MyBooleanFieldEditor() {
-			super();
-		}
-
-		/**
-		 * @param name
-		 * @param label
-		 * @param parent
-		 */
-		public MyBooleanFieldEditor(String name, String label, Composite parent) {
-			super(name, label, parent);
-		}
-
-		/**
-		 * @param name
-		 * @param labelText
-		 * @param style
-		 * @param parent
-		 */
-		public MyBooleanFieldEditor(String name, String labelText, int style,
-				Composite parent) {
-			super(name, labelText, style, parent);
-		}
-
-		public Button getChangeControl(Composite parent) {
-			return super.getChangeControl(parent);
-		}
-
 	}
 
 }

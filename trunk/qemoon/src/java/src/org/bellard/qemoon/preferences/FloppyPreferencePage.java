@@ -26,16 +26,15 @@
 package org.bellard.qemoon.preferences;
 
 import org.bellard.qemoon.Activator;
+import org.bellard.qemoon.components.QFieldEditorPreferencePage;
 import org.bellard.qemoon.constants.Configuration2Constants;
 import org.bellard.qemoon.constants.PreferenceConstants;
-import org.eclipse.jface.preference.FieldEditorPreferencePage;
-import org.eclipse.jface.preference.FileFieldEditor;
 
 /**
  * @author Eric Bellard - eric.bellard@gmail.com
  * 
  */
-public class FloppyPreferencePage extends FieldEditorPreferencePage {
+public class FloppyPreferencePage extends QFieldEditorPreferencePage {
 
 	public static final String PREFERENCES_FLOPPY_FDA_LABEL = "preferences.floppy.fda.label";
 
@@ -46,7 +45,8 @@ public class FloppyPreferencePage extends FieldEditorPreferencePage {
 	/**
 	 */
 	public FloppyPreferencePage() {
-		super(Activator.getDefault().getMessages().getString(PreferenceConstants.PREFERENCES_FLOPPY_TITLE), GRID);
+		super(Activator.getDefault().getMessages().getString(
+				PreferenceConstants.PREFERENCES_FLOPPY_TITLE), GRID);
 
 	}
 
@@ -58,18 +58,10 @@ public class FloppyPreferencePage extends FieldEditorPreferencePage {
 	@Override
 	protected void createFieldEditors() {
 
-		FileFieldEditor floppyfda = new FileFieldEditor(
-				Configuration2Constants.FDA_VALUE, Activator.getDefault().getMessages()
-						.getString(PREFERENCES_FLOPPY_FDA_LABEL),
-				getFieldEditorParent());
-		floppyfda.setEmptyStringAllowed(true);
-		addField(floppyfda);
-		FileFieldEditor floppyfdb = new FileFieldEditor(
-				Configuration2Constants.FDB_VALUE, Activator.getDefault().getMessages()
-						.getString(PREFERENCES_FLOPPY_FDB_LABEL),
-				getFieldEditorParent());
-		floppyfdb.setEmptyStringAllowed(true);
-		addField(floppyfdb);
+		createFileFieldEditor(Configuration2Constants.FDA_VALUE,
+				PREFERENCES_FLOPPY_FDA_LABEL, true);
+		createFileFieldEditor(Configuration2Constants.FDB_VALUE,
+				PREFERENCES_FLOPPY_FDB_LABEL, true);
 
 	}
 }
