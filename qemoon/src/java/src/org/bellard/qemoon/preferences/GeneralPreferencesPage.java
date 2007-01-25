@@ -26,10 +26,9 @@
 package org.bellard.qemoon.preferences;
 
 import org.bellard.qemoon.Activator;
+import org.bellard.qemoon.components.QFieldEditorPreferencePage;
 import org.bellard.qemoon.constants.PreferenceConstants;
 import org.eclipse.jface.preference.BooleanFieldEditor;
-import org.eclipse.jface.preference.FieldEditorPreferencePage;
-import org.eclipse.jface.preference.FileFieldEditor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.ui.IWorkbench;
@@ -39,8 +38,8 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
  * @author Eric Bellard - eric.bellard@gmail.com
  * 
  */
-public class GeneralPreferencesPage extends FieldEditorPreferencePage implements
-		IWorkbenchPreferencePage {
+public class GeneralPreferencesPage extends QFieldEditorPreferencePage
+		implements IWorkbenchPreferencePage {
 
 	public final static String ID = GeneralPreferencesPage.class.getName();
 
@@ -65,21 +64,13 @@ public class GeneralPreferencesPage extends FieldEditorPreferencePage implements
 		setMessage(Activator.getDefault().getMessages().getString(
 				PreferenceConstants.PREFERENCES_TITLE));
 
-		FileFieldEditor qemu = new FileFieldEditor(
-				PreferenceConstants.PREFERENCES_QEMU_PATH_VALUE,
-				Activator.getDefault().getMessages().getString(
-						PreferenceConstants.PREFERENCES_QEMU_PATH_LABEL),
-				getFieldEditorParent());
-		addField(qemu);
+		createFileFieldEditor(PreferenceConstants.PREFERENCES_QEMU_PATH_VALUE,
+				PreferenceConstants.PREFERENCES_QEMU_PATH_LABEL, false);
 
-		FileFieldEditor qemuimg = new FileFieldEditor(
+		createFileFieldEditor(
 				PreferenceConstants.PREFERENCES_QEMUIMG_PATH_VALUE,
-				Activator.getDefault().getMessages().getString(
-						PreferenceConstants.PREFERENCES_QEMUIMG_PATH_LABEL),
-				getFieldEditorParent());
-		addField(qemuimg);
-		
-		
+				PreferenceConstants.PREFERENCES_QEMUIMG_PATH_LABEL, false);
+
 		// DirectoryFieldEditor kqemuDfe = new
 		// DirectoryFieldEditor(PreferenceConstants.PREFERENCES_KQEMU_PATH_VALUE,
 		// Activator.getDefault().getMessages().getString(PreferenceConstants.PREFERENCES_KQEMU_PATH_LABEL),

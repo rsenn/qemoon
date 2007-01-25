@@ -26,15 +26,14 @@
 package org.bellard.qemoon.preferences;
 
 import org.bellard.qemoon.Activator;
-import org.bellard.qemoon.components.ComboFieldEditor;
+import org.bellard.qemoon.components.QFieldEditorPreferencePage;
 import org.bellard.qemoon.constants.Configuration2Constants;
-import org.eclipse.jface.preference.FieldEditorPreferencePage;
 
 /**
  * @author Eric Bellard - eric.bellard@gmail.com
  * 
  */
-public class KeyboardPreferencePage extends FieldEditorPreferencePage {
+public class KeyboardPreferencePage extends QFieldEditorPreferencePage {
 
 	public static final String PREFERENCES_KEYBOARD_LABEL = "preferences.keyboard.label";
 
@@ -47,7 +46,8 @@ public class KeyboardPreferencePage extends FieldEditorPreferencePage {
 	/**
 	 */
 	public KeyboardPreferencePage() {
-		super(Activator.getDefault().getMessages().getString(PREFERENCES_KEYBOARD_TITLE), GRID);
+		super(Activator.getDefault().getMessages().getString(
+				PREFERENCES_KEYBOARD_TITLE), GRID);
 	}
 
 	/*
@@ -58,13 +58,8 @@ public class KeyboardPreferencePage extends FieldEditorPreferencePage {
 	@Override
 	protected void createFieldEditors() {
 
-		final ComboFieldEditor combo = new ComboFieldEditor(
-				Configuration2Constants.KEYBOARD_VALUE, Activator.getDefault().getMessages()
-						.getString(PREFERENCES_KEYBOARD_LABEL),
-				getFieldEditorParent(), Activator.getDefault().getMessages()
-						.getStringArray(PREFERENCES_KEYBOARD_VALUES));
-
-		addField(combo);
+		createComboFieldEditor(Configuration2Constants.KEYBOARD_VALUE,
+				PREFERENCES_KEYBOARD_LABEL, PREFERENCES_KEYBOARD_VALUES);
 
 	}
 }

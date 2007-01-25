@@ -28,24 +28,29 @@ package org.bellard.qemoon.preferences;
 import org.bellard.qemoon.Activator;
 import org.bellard.qemoon.components.ComboFieldEditor;
 import org.bellard.qemoon.components.ControlEnableBooleanFieldEditor;
+import org.bellard.qemoon.components.QFieldEditorPreferencePage;
 import org.bellard.qemoon.constants.Configuration2Constants;
 import org.bellard.qemoon.constants.PreferenceConstants;
-import org.eclipse.jface.preference.FieldEditorPreferencePage;
 
 /**
  * @author Eric Bellard - eric.bellard@gmail.com
  * 
  */
-public class AudioPreferencePage extends FieldEditorPreferencePage {
+public class AudioPreferencePage extends QFieldEditorPreferencePage {
 
 	public static final String PREFERENCES_AUDIO_VALUES = "preferences.audio.values";
+
 	public static final String PREFERENCES_AUDIO_LABEL = "preferences.audio.label";
+
 	public static final String PREFERENCES_AUDIO_CHECKLABEL = "preferences.audio.checklabel";
+
 	public static final String PREFERENCES_AUDIO_DESCRIPTION = "preferences.audio.description";
+
 	/**
 	 */
 	public AudioPreferencePage() {
-		super(Activator.getDefault().getMessages().getString(PreferenceConstants.PREFERENCES_AUDIO_TITLE), GRID);
+		super(Activator.getDefault().getMessages().getString(
+				PreferenceConstants.PREFERENCES_AUDIO_TITLE), GRID);
 
 	}
 
@@ -57,18 +62,18 @@ public class AudioPreferencePage extends FieldEditorPreferencePage {
 	@Override
 	protected void createFieldEditors() {
 
-		ControlEnableBooleanFieldEditor enableAudio = new ControlEnableBooleanFieldEditor(Configuration2Constants.AUDIO_ENABLE,
-				Activator.getDefault().getMessages().getString(PREFERENCES_AUDIO_CHECKLABEL),
+		ControlEnableBooleanFieldEditor enableAudio = new ControlEnableBooleanFieldEditor(
+				Configuration2Constants.AUDIO_ENABLE, Activator.getDefault()
+						.getMessages().getString(PREFERENCES_AUDIO_CHECKLABEL),
 				getFieldEditorParent());
+		addField(enableAudio);
 
-		final ComboFieldEditor combo = new ComboFieldEditor(Configuration2Constants.AUDIO_VALUE,
-				Activator.getDefault().getMessages().getString(PREFERENCES_AUDIO_LABEL),
-				getFieldEditorParent(), Activator.getDefault().getMessages()
-						.getStringArray(PREFERENCES_AUDIO_VALUES));
+		final ComboFieldEditor combo = createComboFieldEditor(
+				Configuration2Constants.AUDIO_VALUE, PREFERENCES_AUDIO_LABEL,
+				PREFERENCES_AUDIO_VALUES);
 
 		enableAudio.addToEnable(combo.getCombo());
 
-		addField(enableAudio);
-		addField(combo);
 	}
+
 }

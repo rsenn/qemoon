@@ -27,9 +27,9 @@ package org.bellard.qemoon.preferences;
 
 import org.bellard.qemoon.Activator;
 import org.bellard.qemoon.components.QBooleanFieldEditor;
+import org.bellard.qemoon.components.QFieldEditorPreferencePage;
 import org.bellard.qemoon.constants.Configuration2Constants;
 import org.bellard.qemoon.constants.PreferenceConstants;
-import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.FileFieldEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
@@ -40,7 +40,7 @@ import org.eclipse.swt.widgets.Listener;
  * @author Eric Bellard - eric.bellard@gmail.com
  * 
  */
-public class HardDiskPreferencePage extends FieldEditorPreferencePage {
+public class HardDiskPreferencePage extends QFieldEditorPreferencePage {
 
 	public static final String PREFERENCES_HARDDISK_MAIN_LABEL = "preferences.harddisk.main.label";
 
@@ -74,15 +74,15 @@ public class HardDiskPreferencePage extends FieldEditorPreferencePage {
 	@Override
 	protected void createFieldEditors() {
 
-		QBooleanFieldEditor enableImage = createQBoolean(
+		QBooleanFieldEditor enableImage = createQBooleanFiedEditor(
 				Configuration2Constants.IMAGE_CUSTOM,
 				PREFERENCES_HARDDISK_MAIN_CUSTOM);
 
-		final FileFieldEditor imageSelect = createHardDrive(
+		final FileFieldEditor imageSelect = createFileFieldEditor(
 				Configuration2Constants.IMAGE_VALUE,
-				PREFERENCES_HARDDISK_MAIN_LABEL);
+				PREFERENCES_HARDDISK_MAIN_LABEL, true);
 
-		createQBoolean(Configuration2Constants.SNAPSHOT_VALUE,
+		createQBooleanFiedEditor(Configuration2Constants.SNAPSHOT_VALUE,
 				PREFERENCES_HARDDISK_MAIN_SNAPSHOT);
 
 		enableImage.getChangeControl(getFieldEditorParent()).addListener(
@@ -104,38 +104,15 @@ public class HardDiskPreferencePage extends FieldEditorPreferencePage {
 		}
 
 		// others hard drive
-		createHardDrive(Configuration2Constants.HDA_VALUE,
-				PREFERENCES_HARDDISK_HDA_LABEL);
-		createHardDrive(Configuration2Constants.HDB_VALUE,
-				PREFERENCES_HARDDISK_HDB_LABEL);
-		createHardDrive(Configuration2Constants.HDC_VALUE,
-				PREFERENCES_HARDDISK_HDC_LABEL);
-		createHardDrive(Configuration2Constants.HDD_VALUE,
-				PREFERENCES_HARDDISK_HDD_LABEL);
+		createFileFieldEditor(Configuration2Constants.HDA_VALUE,
+				PREFERENCES_HARDDISK_HDA_LABEL, true);
+		createFileFieldEditor(Configuration2Constants.HDB_VALUE,
+				PREFERENCES_HARDDISK_HDB_LABEL, true);
+		createFileFieldEditor(Configuration2Constants.HDC_VALUE,
+				PREFERENCES_HARDDISK_HDC_LABEL, true);
+		createFileFieldEditor(Configuration2Constants.HDD_VALUE,
+				PREFERENCES_HARDDISK_HDD_LABEL, true);
 
-	}
-
-	/**
-	 * Create hard drive
-	 * 
-	 * @param value
-	 * @param label
-	 */
-	protected FileFieldEditor createHardDrive(String value, String label) {
-		FileFieldEditor hd = new FileFieldEditor(value, Activator.getDefault()
-				.getMessages().getString(label), getFieldEditorParent());
-		hd.setEmptyStringAllowed(true);
-		addField(hd);
-		return hd;
-	}
-
-	protected QBooleanFieldEditor createQBoolean(String value, String label) {
-		QBooleanFieldEditor qboolfield = new QBooleanFieldEditor(value,
-				Activator.getDefault().getMessages().getString(label),
-				getFieldEditorParent());
-
-		addField(qboolfield);
-		return qboolfield;
 	}
 
 }

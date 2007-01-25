@@ -26,16 +26,15 @@
 package org.bellard.qemoon.preferences;
 
 import org.bellard.qemoon.Activator;
+import org.bellard.qemoon.components.QFieldEditorPreferencePage;
 import org.bellard.qemoon.constants.Configuration2Constants;
 import org.bellard.qemoon.constants.PreferenceConstants;
-import org.eclipse.jface.preference.FieldEditorPreferencePage;
-import org.eclipse.jface.preference.FileFieldEditor;
 
 /**
  * @author Eric Bellard - eric.bellard@gmail.com
  * 
  */
-public class CDROMPreferencePage extends FieldEditorPreferencePage {
+public class CDROMPreferencePage extends QFieldEditorPreferencePage {
 
 	public static final String PREFERENCES_CDROM_CD_LABEL = "preferences.cdrom.cd.label";
 
@@ -60,12 +59,8 @@ public class CDROMPreferencePage extends FieldEditorPreferencePage {
 		setMessage(Activator.getDefault().getMessages().getString(
 				PREFERENCES_CDROM_DESCRIPTION));
 
-		FileFieldEditor cd1 = new FileFieldEditor(
-				Configuration2Constants.CD_VALUE, Activator.getDefault()
-						.getMessages().getString(PREFERENCES_CDROM_CD_LABEL),
-				getFieldEditorParent());
-		cd1.setEmptyStringAllowed(true);
-		addField(cd1);
+		createFileFieldEditor(Configuration2Constants.CD_VALUE,
+				PREFERENCES_CDROM_CD_LABEL, true);
 
 	}
 }
