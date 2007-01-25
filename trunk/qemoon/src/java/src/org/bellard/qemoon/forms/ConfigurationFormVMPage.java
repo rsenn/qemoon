@@ -221,7 +221,7 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 			FormToolkit toolkit, Composite composite) {
 		Composite deviceComposite = createSection(toolkit, form, composite,
 				"configuration.vm.device.title",
-				"configuration.vm.device.description", 2);
+				"configuration.vm.device.description", 2, false);
 
 		// memory link
 		ImageHyperlink memoryLink = createImageHyperlink(deviceComposite,
@@ -373,61 +373,63 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 		});
 
 		// image link
-		ImageHyperlink imageLink = createImageHyperlink(deviceComposite,
-				toolkit, "configuration.vm.device.image", ICONS_QE_22X22_PNG);
-		String imageText = "";
-		if (getConfigurationFormEditor().getPreferenceStore().getBoolean(
-				Configuration2Constants.IMAGE_CUSTOM)) {
-			imageText = getConfigurationFormEditor().getPreferenceStore()
-					.getString(Configuration2Constants.IMAGE_VALUE);
-			imageText = imageText.substring(imageText.lastIndexOf("/") + 1);
-		}
-		imageLabel = toolkit.createLabel(deviceComposite, imageText, SWT.WRAP);
-		getConfigurationFormEditor().getPreferenceStore()
-				.addPropertyChangeListener(new IPropertyChangeListener() {
-					public void propertyChange(PropertyChangeEvent event) {
-						if (event.getProperty().equals(
-								Configuration2Constants.IMAGE_CUSTOM)
-								|| event.getProperty().equals(
-										Configuration2Constants.IMAGE_VALUE)) {
-							if (getConfigurationFormEditor()
-									.getPreferenceStore()
-									.getBoolean(
-											Configuration2Constants.IMAGE_CUSTOM)) {
-								String imageText = event.getNewValue()
-										.toString();
-								imageText = imageText.substring(imageText
-										.lastIndexOf("/") + 1);
-								imageLabel.setText(imageText);
-							} else {
-								imageLabel.setText("");
-							}
-							imageLabel.pack();
-						}
+		// ImageHyperlink imageLink = createImageHyperlink(deviceComposite,
+		// toolkit, "configuration.vm.device.image", ICONS_QE_22X22_PNG);
+		// String imageText = "";
+		// if (getConfigurationFormEditor().getPreferenceStore().getBoolean(
+		// Configuration2Constants.IMAGE_CUSTOM)) {
+		// imageText = getConfigurationFormEditor().getPreferenceStore()
+		// .getString(Configuration2Constants.IMAGE_VALUE);
+		// imageText = imageText.substring(imageText.lastIndexOf("/") + 1);
+		// }
+		// imageLabel = toolkit.createLabel(deviceComposite, imageText,
+		// SWT.WRAP);
+		// getConfigurationFormEditor().getPreferenceStore()
+		// .addPropertyChangeListener(new IPropertyChangeListener() {
+		// public void propertyChange(PropertyChangeEvent event) {
+		// if (event.getProperty().equals(
+		// Configuration2Constants.IMAGE_CUSTOM)
+		// || event.getProperty().equals(
+		// Configuration2Constants.IMAGE_VALUE)) {
+		// if (getConfigurationFormEditor()
+		// .getPreferenceStore()
+		// .getBoolean(
+		// Configuration2Constants.IMAGE_CUSTOM)) {
+		// String imageText = event.getNewValue()
+		// .toString();
+		// imageText = imageText.substring(imageText
+		// .lastIndexOf("/") + 1);
+		// imageLabel.setText(imageText);
+		// } else {
+		// imageLabel.setText("");
+		// }
+		// imageLabel.pack();
+		// }
+		//
+		// }
+		// });
+		//
+		// imageLink.addHyperlinkListener(new HyperlinkAdapter() {
+		// public void linkActivated(HyperlinkEvent e) {
+		// logger.info("image Link activated!");
+		// createAndDisplayPreferenceDialog(form,
+		// VMConfigurationPreferenceManager.QEMU_IMAGE);
+		// }
+		// });
 
-					}
-				});
-
-		imageLink.addHyperlinkListener(new HyperlinkAdapter() {
+		// keyboard
+		ImageHyperlink keyboardLink = createImageHyperlink(deviceComposite,
+				toolkit, "configuration.vm.device.keyboard",
+				"icons/22x22/keyboard.png");
+		toolkit.createLabel(deviceComposite, "");
+		keyboardLink.addHyperlinkListener(new HyperlinkAdapter() {
 			public void linkActivated(HyperlinkEvent e) {
-				logger.info("image Link activated!");
+				logger.info("keyboard Link activated!");
 				createAndDisplayPreferenceDialog(form,
-						VMConfigurationPreferenceManager.QEMU_IMAGE);
+						VMConfigurationPreferenceManager.KEYBOARD);
 			}
 		});
 
-		// keyboard
-		// ImageHyperlink keyboardLink = createImageHyperlink(deviceComposite,
-		// toolkit, "configuration.vm.device.keyboard",
-		// "icons/22x22/keyboard.png");
-		// toolkit.createLabel(deviceComposite, "");
-		// keyboardLink.addHyperlinkListener(new HyperlinkAdapter() {
-		// public void linkActivated(HyperlinkEvent e) {
-		// logger.info("keyboard Link activated!");
-		// createAndDisplayPreferenceDialog(form,
-		// VMConfigurationPreferenceManager.KEYBOARD);
-		// }
-		// });
 	}
 
 	/**
@@ -570,6 +572,18 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 	protected Composite createSection(FormToolkit toolkit,
 			final ScrolledForm form, Composite composite, String title,
 			String tooltip, int numcol) {
+		return createSection(toolkit, form, composite, title, tooltip, numcol,
+				true);
+	}
+
+	/**
+	 * @param toolkit
+	 * @param composite
+	 * @param form
+	 */
+	protected Composite createSection(FormToolkit toolkit,
+			final ScrolledForm form, Composite composite, String title,
+			String tooltip, int numcol, boolean expanded) {
 
 		Section section = toolkit.createSection(composite, Section.DESCRIPTION
 				| Section.TWISTIE | Section.TITLE_BAR | Section.EXPANDED);
@@ -590,6 +604,7 @@ public class ConfigurationFormVMPage extends FormPage implements IFormPage {
 		section.setText(Activator.getDefault().getMessages().getString(title));
 		section.setToolTipText(Activator.getDefault().getMessages().getString(
 				tooltip));
+		section.setExpanded(expanded);
 
 		Composite sectionClient = toolkit.createComposite(section);
 		layout = new TableWrapLayout();
