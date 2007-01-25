@@ -26,16 +26,27 @@
 package org.bellard.qemoon.preferences;
 
 import org.bellard.qemoon.Activator;
+import org.bellard.qemoon.components.QBooleanFieldEditor;
 import org.bellard.qemoon.constants.Configuration2Constants;
 import org.bellard.qemoon.constants.PreferenceConstants;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.FileFieldEditor;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 
 /**
  * @author Eric Bellard - eric.bellard@gmail.com
  * 
  */
 public class HardDiskPreferencePage extends FieldEditorPreferencePage {
+
+	public static final String PREFERENCES_HARDDISK_MAIN_LABEL = "preferences.harddisk.main.label";
+
+	public static final String PREFERENCES_HARDDISK_MAIN_CUSTOM = "preferences.harddisk.main.custom.label";
+
+	public static final String PREFERENCES_HARDDISK_MAIN_SNAPSHOT = "preferences.harddisk.main.snapshot.label";
 
 	public static final String PREFERENCES_HARDDISK_HDD_LABEL = "preferences.harddisk.hdd.label";
 
@@ -63,36 +74,68 @@ public class HardDiskPreferencePage extends FieldEditorPreferencePage {
 	@Override
 	protected void createFieldEditors() {
 
-		FileFieldEditor hda = new FileFieldEditor(
-				Configuration2Constants.HDA_VALUE, Activator.getDefault()
-						.getMessages()
-						.getString(PREFERENCES_HARDDISK_HDA_LABEL),
-				getFieldEditorParent());
-		FileFieldEditor hdb = new FileFieldEditor(
-				Configuration2Constants.HDB_VALUE, Activator.getDefault()
-						.getMessages()
-						.getString(PREFERENCES_HARDDISK_HDB_LABEL),
-				getFieldEditorParent());
-		FileFieldEditor hdc = new FileFieldEditor(
-				Configuration2Constants.HDC_VALUE, Activator.getDefault()
-						.getMessages()
-						.getString(PREFERENCES_HARDDISK_HDC_LABEL),
-				getFieldEditorParent());
-		FileFieldEditor hdd = new FileFieldEditor(
-				Configuration2Constants.HDD_VALUE, Activator.getDefault()
-						.getMessages()
-						.getString(PREFERENCES_HARDDISK_HDD_LABEL),
-				getFieldEditorParent());
+		QBooleanFieldEditor enableImage = createQBoolean(
+				Configuration2Constants.IMAGE_CUSTOM,
+				PREFERENCES_HARDDISK_MAIN_CUSTOM);
 
-		hda.setEmptyStringAllowed(true);
-		hdb.setEmptyStringAllowed(true);
-		hdc.setEmptyStringAllowed(true);
-		hdd.setEmptyStringAllowed(true);
+		final FileFieldEditor imageSelect = createHardDrive(
+				Configuration2Constants.IMAGE_VALUE,
+				PREFERENCES_HARDDISK_MAIN_LABEL);
 
-		addField(hda);
-		addField(hdb);
-		addField(hdc);
-		addField(hdd);
+		createQBoolean(Configuration2Constants.SNAPSHOT_VALUE,
+				PREFERENCES_HARDDISK_MAIN_SNAPSHOT);
+
+		enableImage.getChangeControl(getFieldEditorParent()).addListener(
+				SWT.Selection, new Listener() {
+					public void handleEvent(Event event) {
+						if (((Button) event.widget).getSelection()) {
+							imageSelect
+									.setEnabled(true, getFieldEditorParent());
+						} else {
+							imageSelect.setEnabled(false,
+									getFieldEditorParent());
+						}
+					}
+				});
+
+		if (!getPreferenceStore().getBoolean(
+				Configuration2Constants.IMAGE_CUSTOM)) {
+			imageSelect.setEnabled(false, getFieldEditorParent());
+		}
+
+		// others hard drive
+		createHardDrive(Configuration2Constants.HDA_VALUE,
+				PREFERENCES_HARDDISK_HDA_LABEL);
+		createHardDrive(Configuration2Constants.HDB_VALUE,
+				PREFERENCES_HARDDISK_HDB_LABEL);
+		createHardDrive(Configuration2Constants.HDC_VALUE,
+				PREFERENCES_HARDDISK_HDC_LABEL);
+		createHardDrive(Configuration2Constants.HDD_VALUE,
+				PREFERENCES_HARDDISK_HDD_LABEL);
 
 	}
+
+	/**
+	 * Create hard drive
+	 * 
+	 * @param value
+	 * @param label
+	 */
+	protected FileFieldEditor createHardDrive(String value, String label) {
+		FileFieldEditor hd = new FileFieldEditor(value, Activator.getDefault()
+				.getMessages().getString(label), getFieldEditorParent());
+		hd.setEmptyStringAllowed(true);
+		addField(hd);
+		return hd;
+	}
+
+	protected QBooleanFieldEditor createQBoolean(String value, String label) {
+		QBooleanFieldEditor qboolfield = new QBooleanFieldEditor(value,
+				Activator.getDefault().getMessages().getString(label),
+				getFieldEditorParent());
+
+		addField(qboolfield);
+		return qboolfield;
+	}
+
 }
