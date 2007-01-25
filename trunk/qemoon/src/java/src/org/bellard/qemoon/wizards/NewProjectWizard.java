@@ -124,6 +124,7 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 					Configuration2Constants.IMAGE_VALUE, diskpath);
 			v.getPreferenceStore().setValue(
 					Configuration2Constants.IMAGE_DEFAULT_VALUE, diskpath);
+			v.getPreferenceStore().save();
 
 		} catch (IOException e) {
 			String message = "io problem when executing qemu-img";
