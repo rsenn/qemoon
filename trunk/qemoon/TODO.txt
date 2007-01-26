@@ -7,6 +7,10 @@
 
 * Define an error management policy 2
 
+* Detect cdrom drive
+* Detect keyboard
+* Hard Drive: add hard drive on demand => non static hard drive file chooser
+
 * gui :
 - key shortcut for message
 - create tool bar : start, stop, resume, pause 2
