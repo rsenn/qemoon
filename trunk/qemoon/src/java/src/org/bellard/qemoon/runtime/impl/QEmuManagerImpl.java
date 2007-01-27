@@ -56,7 +56,9 @@ public class QEmuManagerImpl implements QEmuManager {
 	 * @see org.bellard.qemoon.runtime.impl.QEmuManage#start()
 	 */
 	public void start() {
-
+		if (logger.isDebugEnabled()) {
+			logger.debug("start...");
+		}
 		Activator activator = Activator.getDefault();
 		String qemupath = activator.getPreferenceStore().getString(
 				PreferenceConstants.PREFERENCES_QEMU_PATH_VALUE);
