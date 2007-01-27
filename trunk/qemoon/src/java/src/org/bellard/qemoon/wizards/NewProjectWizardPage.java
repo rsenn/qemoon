@@ -128,4 +128,9 @@ public class NewProjectWizardPage extends WizardPage {
 		this.oldName = s;
 	}
 
+	
+	public ISelection getSelection() {
+		return selection;
+	}
+	
 }
