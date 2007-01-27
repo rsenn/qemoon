@@ -75,7 +75,6 @@ public class QImageCommandGenerator {
 	public String[] buildCommandArgument() {
 		List<String> arguments = new ArrayList<String>();
 
-		StringBuffer scommand = new StringBuffer();
 		arguments.add(qemuimgpath);
 		switch (command) {
 		case CREATE_COMMAND:
