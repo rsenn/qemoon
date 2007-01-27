@@ -25,12 +25,8 @@
  */
 package org.bellard.qemoon.wizards;
 
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
-
 import org.bellard.qemoon.Activator;
 import org.bellard.qemoon.utils.ValidatorUtils;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.dialogs.IDialogPage;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.wizard.WizardPage;
@@ -154,6 +150,13 @@ public class ProjectConfigWizardPage extends WizardPage {
 
 	public String getHardDiskSizeText() {
 		return diskSizeText.getText();
+	}
+
+	/**
+	 * @return the selection
+	 */
+	public ISelection getSelection() {
+		return selection;
 	}
 
 }
