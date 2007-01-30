@@ -17,7 +17,7 @@ qemoon is in a development state. It is not suitable in production use or for ad
 == Installation ==
   * Get and install a recent [http://java.com/java/download/index.jsp?cid=jdp84244" JRE version] (1.5 or greater).
   * Dowload the right [http://ebellard.free.fr/qemoon/download.html qemoon distribution] for your os:
-    * [http://ebellard.free.fr/qemoon/qemoon-windows-0.0.2.1.zip qemoon 0.2.2 windows] 
+    * [http://ebellard.free.fr/qemoon/qemoon-windows-0.0.2.2.zip qemoon 0.2.2 windows] 
     * [http://ebellard.free.fr/qemoon/qemoon-linux-gtk-0.0.2.2.zip qemoon 0.2.2 linux]
   * Unzip the qemoon distribution
   * Launch the qemoon executable : _qemoon.exe_ for windows, _qemoon_ for linux.
