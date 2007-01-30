@@ -11,7 +11,7 @@ It will contain:
 = Documentation =
 
 == Desription ==
-qemoon is a gui for the qemu emulator. It allows to use qemu without knowing all command-line options.
+[http://qemoon.org qemoon] is a gui for the [http://qemu.org qemu] emulator. It allows to use qemu without knowing all command-line options.
 qemoon is in a development state. It is not suitable in production use or for advance qemu users.
  
 == Installation ==
@@ -22,13 +22,14 @@ qemoon is in a development state. It is not suitable in production use or for ad
   * Rock&Roll!!!
 
 
+
 == Usage ==
 
 === Create a new vm from scratch ===
-  # Create a new project : File > New > VM Configuration Project then Next 
-  # Choose a unique name then Next
-  # Choose the memory size (a 4 multiple) and the hard drive size then OK
-  # open the vm configuration : double-click on the project
+  # Create a new project : *File > New > VM Configuration Project* then *Next* 
+  # Choose a unique name then *Next*
+  # Choose the memory size (a 4 multiple) and the hard drive size then *OK*
+  # double-click on the project to open the vm configuration  
   # Now you can:
     * control the vm: run, stop, pause
     * edit the vm configuration
@@ -36,8 +37,8 @@ qemoon is in a development state. It is not suitable in production use or for ad
     
 === Create a new vm from an existing image ===
 It consists in creating a project which uses an existing hard drive with a linux os.
-  # Create a new example project : File > New > VM Example Configuration Project then Next 
-  # Choose a unique name then OK.
+  # Create a new example project : *File > New > VM Example Configuration Project* then *Next* 
+  # Choose a unique name then *OK*.
   # Now you can:
     * control the vm: run, stop, pause
     * edit the vm configuration
