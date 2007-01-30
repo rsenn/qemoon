@@ -74,6 +74,7 @@ public class HardDiskPreferencePage extends QFieldEditorPreferencePage {
 	@Override
 	protected void createFieldEditors() {
 
+		// enable custom main hard drive
 		QBooleanFieldEditor enableImage = createQBooleanFiedEditor(
 				Configuration2Constants.IMAGE_CUSTOM,
 				PREFERENCES_HARDDISK_MAIN_CUSTOM);
@@ -81,9 +82,6 @@ public class HardDiskPreferencePage extends QFieldEditorPreferencePage {
 		final FileFieldEditor imageSelect = createFileFieldEditor(
 				Configuration2Constants.IMAGE_VALUE,
 				PREFERENCES_HARDDISK_MAIN_LABEL, true);
-
-		createQBooleanFiedEditor(Configuration2Constants.SNAPSHOT_VALUE,
-				PREFERENCES_HARDDISK_MAIN_SNAPSHOT);
 
 		enableImage.getChangeControl(getFieldEditorParent()).addListener(
 				SWT.Selection, new Listener() {
@@ -102,6 +100,12 @@ public class HardDiskPreferencePage extends QFieldEditorPreferencePage {
 				Configuration2Constants.IMAGE_CUSTOM)) {
 			imageSelect.setEnabled(false, getFieldEditorParent());
 		}
+
+		
+		// is main hard drive a snaphsot image
+		createQBooleanFiedEditor(Configuration2Constants.SNAPSHOT_VALUE,
+				PREFERENCES_HARDDISK_MAIN_SNAPSHOT);
+
 
 		// others hard drive
 		createFileFieldEditor(Configuration2Constants.HDA_VALUE,
