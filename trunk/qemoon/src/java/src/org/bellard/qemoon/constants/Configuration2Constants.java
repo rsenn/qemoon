@@ -55,6 +55,8 @@ public interface Configuration2Constants {
 
 	public static final String IMAGE_CUSTOM = "image.enable";
 
+	public static final String QEMU_CUSTOM = "qemu.enable";
+
 	public static final String AUDIO_VALUE = "audio.value";
 
 	public static final String AUDIO_ENABLE = "audio.enable";

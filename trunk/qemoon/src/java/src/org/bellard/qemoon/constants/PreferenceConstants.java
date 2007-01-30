@@ -31,6 +31,10 @@ package org.bellard.qemoon.constants;
  */
 public interface PreferenceConstants {
 
+	public static final String PREFERENCES_QEMU_CUSTOM_PATH_LABEL = "preferences.qemu.custom.path.label";
+
+	public static final String PREFERENCES_QEMU_CUSTOM_PATH_VALUE = "preferences.qemu.custom.path.value";
+
 	public static final String PREFERENCES_QEMU_PATH_VALUE = "preferences.qemu.path.value";
 
 	public static final String PREFERENCES_QEMUIMG_PATH_VALUE = "preferences.qemuimg.path.value";
