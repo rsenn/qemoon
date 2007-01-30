@@ -24,6 +24,8 @@ package org.bellard.qemoon.preferences;
 
 import org.bellard.qemoon.Activator;
 import org.bellard.qemoon.constants.PreferenceConstants;
+import org.bellard.qemoon.resources.PreferenceDefaultBundle;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
 
@@ -39,55 +41,43 @@ public class GeneralPreferenceInitializer extends AbstractPreferenceInitializer 
 	 */
 	public void initializeDefaultPreferences() {
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
-		// store
-		// .setDefault(
-		// PreferenceConstants.PREFERENCES_KQEMU_PATH_VALUE,
-		// Activator
-		// .getDefault()
-		// .getPreferenceDefault()
-		// .getOsspecificString(
-		// PreferenceConstants.PREFERENCES_KQEMU_PATH_VALUE));
+		PreferenceDefaultBundle pdb = Activator.getDefault()
+				.getPreferenceDefault();
+		IPath platformPath = Activator.getDefault().getPlatformPath();
 
 		// build qemu path
-		String qemuPath = Activator
-				.getDefault()
-				.getPlatformPath()
+		String qemuPath = platformPath
 				.append(
-						Activator
-								.getDefault()
-								.getPreferenceDefault()
-								.getOsspecificString(
-										PreferenceConstants.PREFERENCES_QEMU_PATH_VALUE))
+						pdb
+								.getOsspecificString(PreferenceConstants.PREFERENCES_QEMU_PATH_VALUE))
 				.toOSString();
 
-		String qemuimgPath = Activator
-		.getDefault()
-		.getPlatformPath()
-		.append(
-				Activator
-						.getDefault()
-						.getPreferenceDefault()
-						.getOsspecificString(
-								PreferenceConstants.PREFERENCES_QEMUIMG_PATH_VALUE))
-		.toOSString();
-		
-		
+		String qemuimgPath = platformPath
+				.append(
+						pdb
+								.getOsspecificString(PreferenceConstants.PREFERENCES_QEMUIMG_PATH_VALUE))
+				.toOSString();
+
 		// store properties
 		store.setDefault(PreferenceConstants.PREFERENCES_QEMU_PATH_VALUE,
 				qemuPath);
 		store.setDefault(PreferenceConstants.PREFERENCES_QEMUIMG_PATH_VALUE,
 				qemuimgPath);
-		store.setDefault(PreferenceConstants.PREFERENCES_MONITOR_PORT_VALUE,
-				Activator.getDefault().getPreferenceDefault().getDefaultString(
-						PreferenceConstants.PREFERENCES_MONITOR_PORT_VALUE));
+		store
+				.setDefault(
+						PreferenceConstants.PREFERENCES_MONITOR_PORT_VALUE,
+						pdb
+								.getDefaultString(PreferenceConstants.PREFERENCES_MONITOR_PORT_VALUE));
+		store
+				.setDefault(
+						PreferenceConstants.PREFERENCES_QEMU_CUSTOM_PATH_VALUE,
+						pdb
+								.getDefaultString(PreferenceConstants.PREFERENCES_QEMU_CUSTOM_PATH_VALUE));
 		store
 				.setDefault(
 						PreferenceConstants.PREFERENCES_MONITOR_SOCKETSERVER_VALUE,
-						Activator
-								.getDefault()
-								.getPreferenceDefault()
-								.getOsspecificString(
-										PreferenceConstants.PREFERENCES_MONITOR_SOCKETSERVER_VALUE));
+						pdb
+								.getOsspecificString(PreferenceConstants.PREFERENCES_MONITOR_SOCKETSERVER_VALUE));
 
 	}
 }

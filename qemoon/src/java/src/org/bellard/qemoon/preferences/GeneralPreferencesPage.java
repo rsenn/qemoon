@@ -26,11 +26,19 @@
 package org.bellard.qemoon.preferences;
 
 import org.bellard.qemoon.Activator;
+import org.bellard.qemoon.components.QBooleanFieldEditor;
 import org.bellard.qemoon.components.QFieldEditorPreferencePage;
+import org.bellard.qemoon.constants.Configuration2Constants;
 import org.bellard.qemoon.constants.PreferenceConstants;
 import org.eclipse.jface.preference.BooleanFieldEditor;
+import org.eclipse.jface.preference.FileFieldEditor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.IntegerFieldEditor;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
@@ -64,12 +72,42 @@ public class GeneralPreferencesPage extends QFieldEditorPreferencePage
 		setMessage(Activator.getDefault().getMessages().getString(
 				PreferenceConstants.PREFERENCES_TITLE));
 
-		createFileFieldEditor(PreferenceConstants.PREFERENCES_QEMU_PATH_VALUE,
-				PreferenceConstants.PREFERENCES_QEMU_PATH_LABEL, false);
+		// enable custom main hard drive
+		QBooleanFieldEditor enableImage = createQBooleanFiedEditor(
+				PreferenceConstants.PREFERENCES_QEMU_CUSTOM_PATH_VALUE,
+				PreferenceConstants.PREFERENCES_QEMU_CUSTOM_PATH_LABEL);
 
-		createFileFieldEditor(
+		final FileFieldEditor qemuPathSelect = createFileFieldEditor(
+				PreferenceConstants.PREFERENCES_QEMU_PATH_VALUE,
+				PreferenceConstants.PREFERENCES_QEMU_PATH_LABEL, true);
+
+		final FileFieldEditor qemuImagePathSelect = createFileFieldEditor(
 				PreferenceConstants.PREFERENCES_QEMUIMG_PATH_VALUE,
 				PreferenceConstants.PREFERENCES_QEMUIMG_PATH_LABEL, false);
+
+		final Composite p = getFieldEditorParent();
+		enableImage.getChangeControl(getFieldEditorParent()).addListener(
+				SWT.Selection, new Listener() {
+					public void handleEvent(Event event) {
+
+						if (((Button) event.widget).getSelection()) {
+							qemuPathSelect.setEnabled(true, p);
+							qemuImagePathSelect.setEnabled(true, p);
+						} else {
+							qemuPathSelect.setEnabled(false, p);
+							qemuImagePathSelect.setEnabled(false, p);
+						}
+					}
+				});
+
+		if (!getPreferenceStore().getBoolean(
+				Configuration2Constants.IMAGE_CUSTOM)) {
+			qemuPathSelect.setEnabled(false, p);
+			qemuImagePathSelect.setEnabled(false, p);
+		}
+
+		// createFileFieldEditor(PreferenceConstants.PREFERENCES_QEMU_PATH_VALUE,
+		// PreferenceConstants.PREFERENCES_QEMU_PATH_LABEL, false);
 
 		// DirectoryFieldEditor kqemuDfe = new
 		// DirectoryFieldEditor(PreferenceConstants.PREFERENCES_KQEMU_PATH_VALUE,
