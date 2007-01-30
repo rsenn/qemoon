@@ -46,12 +46,12 @@ It consists in creating a project which uses an existing hard drive with a linux
 
 === Delete a project ===
   * Select a project in the navigation view
-  * Click left then select delete in the contextual menu then yes.
+  * Click left then select delete in the contextual menu then *YES*.
 
 === Delete a project ===
   * Select a project in the navigation view
   * Click left then select rename in the contextual menu
-  * Choose a new non-existing name then OK.
+  * Choose a new non-existing name then *OK*.
 
 === Preferences ===
 Access to the preferences with Windows > Preferences
