@@ -11,8 +11,9 @@ It will contain:
 = Documentation =
 
 == Desription ==
-TODO
-
+qemoon is a gui for the qemu emulator. It allows to use qemu without knowing all command-line options.
+qemoon is in a development state. It is not suitable in production use or for advance qemu users.
+ 
 == Installation ==
   * Get and install a recent [http://java.com/java/download/index.jsp?cid=jdp84244" JRE version] (1.5 or greater).
   * Dowload the right [http://ebellard.free.fr/qemoon/download.html qemoon distribution] for your os
@@ -62,7 +63,7 @@ The preferences allow to:
 
 TODO
 
+
 = Requirements =
 
 TODO
-
