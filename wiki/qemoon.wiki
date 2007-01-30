@@ -1,13 +1,18 @@
-#labels qemoon,wiki,documentation,Featured,Phase-Deploy,Phase-Requirements
-#this is the qemoon wiki page. It contains qemoon documentation
-
+#labels Featured,Phase-Deploy,Phase-Requirements
 = Introduction =
 
-This is the qemoon wikipage
-
+This is the qemoon wikipage. This page is in early development.
+It will contain:
+* documentation
+** installation
+** usage
+* features
+* requirements.
 
 
 = Documentation =
+
+== Desription ==
 
 == Installation ==
 
@@ -17,5 +22,7 @@ Add your content here.  Format your content with:
   * Headings, paragraphs, and lists
   * Automatic links to other wiki pages
 
+= Features =
 
+= Requirements =
 
