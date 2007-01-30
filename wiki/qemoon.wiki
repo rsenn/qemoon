@@ -2,13 +2,11 @@
 = Introduction =
 
 This is the qemoon wikipage. This page is in early development.
-It will contain:
-* documentation
-** installation
-** usage
-* features
-* requirements.
 
+It will contain:
+  * documentation (installation, usage)
+  * features
+  * requirements.
 
 = Documentation =
 
