@@ -14,10 +14,49 @@ It will contain:
 TODO
 
 == Installation ==
-TODO
+  * Get and install a recent [http://java.com/java/download/index.jsp?cid=jdp84244" JRE version] (1.5 or greater).
+  * Dowload the right [http://ebellard.free.fr/qemoon/download.html qemoon distribution] for your os
+  * Unzip the qemoon distribution
+  * Launch the qemoon executable : _qemoon.exe_ for windows, _qemoon_ for linux.
+  * Rock&Roll!!!
+
 
 == Usage ==
-TODO
+
+=== Create a new vm from scratch ===
+  # Create a new project : File > New > VM Configuration Project then Next 
+  # Choose a unique name then Next
+  # Choose the memory size (a 4 multiple) and the hard drive size then OK
+  # open the vm configuration : double-click on the project
+  # Now you can:
+    * control the vm: run, stop, pause
+    * edit the vm configuration
+    * clone the vm
+    
+=== Create a new vm from an existing image ===
+It consists in creating a project which uses an existing hard drive with a linux os.
+  # Create a new example project : File > New > VM Example Configuration Project then Next 
+  # Choose a unique name then OK.
+  # Now you can:
+    * control the vm: run, stop, pause
+    * edit the vm configuration
+    * clone the vm
+
+=== Delete a project ===
+  * Select a project in the navigation view
+  * Click left then select delete in the contextual menu then yes.
+
+=== Delete a project ===
+  * Select a project in the navigation view
+  * Click left then select rename in the contextual menu
+  * Choose a new non-existing name then OK.
+
+=== Preferences ===
+Access to the preferences with Windows > Preferences
+The preferences allow to:
+  * Choose a custom qemu and qemu-img installation
+  * Choose the qemu communication port 
+  * Choose whether qemu or qemoon open the server socket for communication (keep default unless you have a good reason) 
 
 = Features =
 
@@ -26,3 +65,4 @@ TODO
 = Requirements =
 
 TODO
+
