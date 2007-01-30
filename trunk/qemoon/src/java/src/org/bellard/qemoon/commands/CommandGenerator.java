@@ -22,6 +22,7 @@
  */
 package org.bellard.qemoon.commands;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,7 @@ import org.bellard.qemoon.Activator;
 import org.bellard.qemoon.constants.Configuration2Constants;
 import org.bellard.qemoon.constants.PreferenceConstants;
 import org.bellard.qemoon.utils.ValidatorUtils;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceStore;
 
@@ -58,6 +60,8 @@ public class CommandGenerator {
 	public static final String CONFIGURATION_MONITOR = "configuration.monitor";
 
 	public static final String CONFIGURATION_SNAPSHOT = "configuration.snapshot";
+
+	public static final String CONFIGURATION_QEMULIB = "configuration.qemulib";
 
 	private final static Logger logger = Logger
 			.getLogger(CommandGenerator.class);
@@ -88,6 +92,21 @@ public class CommandGenerator {
 		}
 		c = new SimpleCommandArgument(qemuPath);
 		l.add(c);
+
+		// qemu libs (windows)
+		boolean isQemuCustom = Activator.getDefault().getPreferenceStore()
+				.getBoolean(Configuration2Constants.QEMU_CUSTOM);
+		logger.debug("qemu custom = " + isQemuCustom);
+		if (!isQemuCustom && Platform.OS_WIN32.equals(Platform.getOS())) {
+			// TODO make it better
+			String qemuPathDir = new File(qemuPath).getParent();
+			c = new SimpleCommandArgument("-"
+					+ p.getString(CONFIGURATION_QEMULIB));
+			l.add(c);
+			c = new SimpleCommandArgument(qemuPathDir);
+			l.add(c);
+		}
+
 		// memory
 		if (!ValidatorUtils.isEmptyOrNull(store
 				.getString(Configuration2Constants.MEMORY_VALUE))) {
@@ -197,14 +216,13 @@ public class CommandGenerator {
 
 		// MUST BE THE LAST
 		// image or snapshot image command
-		String image=null;
+		String image = null;
 		if (store.getBoolean(Configuration2Constants.IMAGE_CUSTOM)) {
-			image= store
-			.getString(Configuration2Constants.IMAGE_VALUE);
+			image = store.getString(Configuration2Constants.IMAGE_VALUE);
 		} else {
 			// use default image path
 			image = store
-			.getString(Configuration2Constants.IMAGE_DEFAULT_VALUE);
+					.getString(Configuration2Constants.IMAGE_DEFAULT_VALUE);
 		}
 
 		if (store.getBoolean(Configuration2Constants.SNAPSHOT_VALUE)) {
@@ -212,7 +230,7 @@ public class CommandGenerator {
 					Configuration2Constants.IMAGE_VALUE, image);
 		} else {
 			c = new SimpleCommandArgument(image);
-			
+
 		}
 		l.add(c);
 
