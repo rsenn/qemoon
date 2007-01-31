@@ -71,7 +71,7 @@ TODO
 TODO
 
 == Known problems ==
-  * Can't lunch the executable under linux:
+  * Can't lunch qemoon under linux:
     * Check the *qemoon* execution right is set
     * Check *qemu* execution right is set
     * Check *qemu-img* execution right is set 
