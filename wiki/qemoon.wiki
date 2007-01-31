@@ -6,7 +6,8 @@ This is the qemoon wikipage. This page is in early development.
 It will contain:
   * documentation (installation, usage)
   * features
-  * requirements.
+  * requirements
+  * Known problems.
 
 = Documentation =
 
@@ -70,7 +71,7 @@ TODO
 
 TODO
 
-== Known problems ==
+= Known problems =
   * Can't lunch qemoon under linux:
     * Check the *qemoon* execution right is set
     * Check *qemu* execution right is set
