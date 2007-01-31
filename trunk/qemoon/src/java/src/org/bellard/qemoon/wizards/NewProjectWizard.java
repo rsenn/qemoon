@@ -105,7 +105,7 @@ public class NewProjectWizard extends Wizard implements INewWizard {
 		String qemuimgpath = Activator.getDefault().getPreferenceStore()
 				.getString(PreferenceConstants.PREFERENCES_QEMUIMG_PATH_VALUE);
 
-		String diskpath = v.getProject().getProjectRelativePath().append(
+		String diskpath = v.getProject().getLocation().append(
 				ConfigurationOptionsConstants.DEFAULT_DISK_NAME).toOSString();
 
 		// if size filled, set the size
