@@ -16,9 +16,9 @@ qemoon is in a development state. It is not suitable in production use or for ad
  
 == Installation ==
   * Get and install a recent [http://java.com/java/download/index.jsp?cid=jdp84244" JRE version] (1.5 or greater).
-  * Dowload the right [http://ebellard.free.fr/qemoon/download.html qemoon distribution] for your os:
-    * [http://ebellard.free.fr/qemoon/qemoon-windows-0.0.2.2.zip qemoon 0.2.2 windows] 
-    * [http://ebellard.free.fr/qemoon/qemoon-linux-gtk-0.0.2.2.zip qemoon 0.2.2 linux]
+  * Download the right [http://ebellard.free.fr/qemoon/download.html qemoon distribution] for your os:
+    * [http://ebellard.free.fr/qemoon/qemoon-windows-0.0.3.zip qemoon 0.0.3 windows] 
+    * [http://ebellard.free.fr/qemoon/qemoon-linux-gtk-0.0.3.zip qemoon 0.0.3 linux]
   * Unzip the qemoon distribution
   * Launch the qemoon executable : _qemoon.exe_ for windows, _qemoon_ for linux.
   * Rock&Roll!!!
@@ -34,7 +34,8 @@ qemoon is in a development state. It is not suitable in production use or for ad
     * control the vm: run, stop, pause
     * edit the vm configuration
     * clone the vm
-    
+  # Simply click on the play button to run the virtual machine
+  
 === Create a new vm from an existing image ===
 It consists in creating a project which uses an existing hard drive with a linux os.
   # Create a new example project : *File > New > VM Example Configuration Project* then *Next* 
