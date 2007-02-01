@@ -79,7 +79,7 @@ The preferences allow to:
   * Better hard drive management
   * Add toolbar
   * nsis installer for windows
-  * better code qua 
+  * improve everything!
 
 = Known problems =
   * Can't lunch qemoon under linux:
