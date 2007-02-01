@@ -90,7 +90,11 @@ The preferences allow to:
   * Some label are not centered with the text
 
 = Some links =
+  * [http://qemoon.org qemoon main site]
   * the [http://qemu.org qemu] official website
   * [http://www.bellard.org Fabrice's site]
   * [http://www.jroller.com/page/ebellard Eric blog] : beware it's in french ;-)
   * [http://wiki.eclipse.org/index.php/Rich_Client_Platform Eclipse RCP homepage]
+  * Other qemu gui :
+    * [http://www.exprofesso.com/jqemu/ JQEMU] : a java gui for qemu
+    * [http://www.kju-app.org/ q] : a  (nice) gui for macosx  
