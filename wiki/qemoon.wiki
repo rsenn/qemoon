@@ -64,15 +64,26 @@ The preferences allow to:
 
 = Features =
 
-TODO
+  * Create/execute/control/manage qemu configuration
+  * Multiplateform: windows, linux, macosx (soon)
+  * Easy to install : unzip & go!
+  * Easy to use (I hope :-)
+  
+= TODO =
 
-
-= Requirements =
-
-TODO
+  * Better documentation : user guide, technical guide
+  * Include a console to display qemu output
+  * Monitor qemu with all possible command (already in the low-level code, must be include in the gui)
+  * OSX port (I need a mac :-)
+  * Autodetect cdrom
+  * Better hard drive management
+  * Add toolbar
+  * nsis installer for windows
+  * better code qua 
 
 = Known problems =
   * Can't lunch qemoon under linux:
     * Check the *qemoon* execution right is set
     * Check *qemu* execution right is set
     * Check *qemu-img* execution right is set 
+  * Some label are not centered with the text
