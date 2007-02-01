@@ -1,11 +1,8 @@
 
 * Bug :
-- Bug in vm launch (cf gestion des erreurs)
 - option display are not centered with the label and the icon (VM configuration editor)
 
-* Define an error management policy 2
-
-* Write good documentation
+* Write good documentation : user guide + technical guide
 
 * Detect cdrom drive
 * Detect keyboard
@@ -43,9 +40,7 @@
 - documentation 4
 - icons/images 4
 - web site 3
-- publish sources 3
 - integrate kqemu 1
-- intégration test image 2
 
 * better install process
 - create installer  => zip ok to start
@@ -54,4 +49,4 @@
 	+ macosx : see what we can do 1
 
 * i18n 5
-- i18n management => community will do it if the project success
+- i18n management => community will do it if the project succeed
