@@ -8,6 +8,7 @@ It will contain:
   * features
   * TODO
   * Known problems.
+  * Some links
 
 = Documentation =
 
@@ -87,3 +88,9 @@ The preferences allow to:
     * Check *qemu* execution right is set
     * Check *qemu-img* execution right is set 
   * Some label are not centered with the text
+
+= Some links =
+  * the [http://qemu.org qemu] official website
+  * [http://www.bellard.org Fabrice's site]
+  * [http://www.jroller.com/page/ebellard Eric blog] : beware it's in french ;-)
+  * [http://wiki.eclipse.org/index.php/Rich_Client_Platform Eclipse RCP homepage]
